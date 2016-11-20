@@ -1,0 +1,308 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		09C9FC631DE2089300AE0E3A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C9FC621DE2089300AE0E3A /* main.m */; };
+		09C9FC661DE2089300AE0E3A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C9FC651DE2089300AE0E3A /* AppDelegate.m */; };
+		09C9FC691DE2089300AE0E3A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C9FC681DE2089300AE0E3A /* ViewController.m */; };
+		09C9FC6C1DE2089300AE0E3A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09C9FC6A1DE2089300AE0E3A /* Main.storyboard */; };
+		09C9FC6E1DE2089300AE0E3A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09C9FC6D1DE2089300AE0E3A /* Assets.xcassets */; };
+		09C9FC711DE2089300AE0E3A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09C9FC6F1DE2089300AE0E3A /* LaunchScreen.storyboard */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		09C9FC5E1DE2089300AE0E3A /* KKPuzzles.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KKPuzzles.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		09C9FC621DE2089300AE0E3A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		09C9FC641DE2089300AE0E3A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		09C9FC651DE2089300AE0E3A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		09C9FC671DE2089300AE0E3A /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		09C9FC681DE2089300AE0E3A /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		09C9FC6B1DE2089300AE0E3A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		09C9FC6D1DE2089300AE0E3A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		09C9FC701DE2089300AE0E3A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		09C9FC721DE2089300AE0E3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		09C9FC5B1DE2089300AE0E3A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		09C9FC551DE2089300AE0E3A = {
+			isa = PBXGroup;
+			children = (
+				09C9FC601DE2089300AE0E3A /* KKPuzzles */,
+				09C9FC5F1DE2089300AE0E3A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		09C9FC5F1DE2089300AE0E3A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				09C9FC5E1DE2089300AE0E3A /* KKPuzzles.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		09C9FC601DE2089300AE0E3A /* KKPuzzles */ = {
+			isa = PBXGroup;
+			children = (
+				09C9FC641DE2089300AE0E3A /* AppDelegate.h */,
+				09C9FC651DE2089300AE0E3A /* AppDelegate.m */,
+				09C9FC671DE2089300AE0E3A /* ViewController.h */,
+				09C9FC681DE2089300AE0E3A /* ViewController.m */,
+				09C9FC6A1DE2089300AE0E3A /* Main.storyboard */,
+				09C9FC6D1DE2089300AE0E3A /* Assets.xcassets */,
+				09C9FC6F1DE2089300AE0E3A /* LaunchScreen.storyboard */,
+				09C9FC721DE2089300AE0E3A /* Info.plist */,
+				09C9FC611DE2089300AE0E3A /* Supporting Files */,
+			);
+			path = KKPuzzles;
+			sourceTree = "<group>";
+		};
+		09C9FC611DE2089300AE0E3A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				09C9FC621DE2089300AE0E3A /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		09C9FC5D1DE2089300AE0E3A /* KKPuzzles */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 09C9FC751DE2089300AE0E3A /* Build configuration list for PBXNativeTarget "KKPuzzles" */;
+			buildPhases = (
+				09C9FC5A1DE2089300AE0E3A /* Sources */,
+				09C9FC5B1DE2089300AE0E3A /* Frameworks */,
+				09C9FC5C1DE2089300AE0E3A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = KKPuzzles;
+			productName = KKPuzzles;
+			productReference = 09C9FC5E1DE2089300AE0E3A /* KKPuzzles.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		09C9FC561DE2089300AE0E3A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = "Krzysztof Kuc";
+				TargetAttributes = {
+					09C9FC5D1DE2089300AE0E3A = {
+						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = SL4HGWV742;
+					};
+				};
+			};
+			buildConfigurationList = 09C9FC591DE2089300AE0E3A /* Build configuration list for PBXProject "KKPuzzles" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 09C9FC551DE2089300AE0E3A;
+			productRefGroup = 09C9FC5F1DE2089300AE0E3A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				09C9FC5D1DE2089300AE0E3A /* KKPuzzles */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		09C9FC5C1DE2089300AE0E3A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				09C9FC711DE2089300AE0E3A /* LaunchScreen.storyboard in Resources */,
+				09C9FC6E1DE2089300AE0E3A /* Assets.xcassets in Resources */,
+				09C9FC6C1DE2089300AE0E3A /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		09C9FC5A1DE2089300AE0E3A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				09C9FC691DE2089300AE0E3A /* ViewController.m in Sources */,
+				09C9FC661DE2089300AE0E3A /* AppDelegate.m in Sources */,
+				09C9FC631DE2089300AE0E3A /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		09C9FC6A1DE2089300AE0E3A /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				09C9FC6B1DE2089300AE0E3A /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		09C9FC6F1DE2089300AE0E3A /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				09C9FC701DE2089300AE0E3A /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		09C9FC731DE2089300AE0E3A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		09C9FC741DE2089300AE0E3A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		09C9FC761DE2089300AE0E3A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = KKPuzzles/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kkuc.KKPuzzles;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		09C9FC771DE2089300AE0E3A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = KKPuzzles/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kkuc.KKPuzzles;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		09C9FC591DE2089300AE0E3A /* Build configuration list for PBXProject "KKPuzzles" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				09C9FC731DE2089300AE0E3A /* Debug */,
+				09C9FC741DE2089300AE0E3A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		09C9FC751DE2089300AE0E3A /* Build configuration list for PBXNativeTarget "KKPuzzles" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				09C9FC761DE2089300AE0E3A /* Debug */,
+				09C9FC771DE2089300AE0E3A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 09C9FC561DE2089300AE0E3A /* Project object */;
+}
