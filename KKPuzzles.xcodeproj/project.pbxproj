@@ -13,6 +13,7 @@
 		09C9FC6C1DE2089300AE0E3A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09C9FC6A1DE2089300AE0E3A /* Main.storyboard */; };
 		09C9FC6E1DE2089300AE0E3A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09C9FC6D1DE2089300AE0E3A /* Assets.xcassets */; };
 		09C9FC711DE2089300AE0E3A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09C9FC6F1DE2089300AE0E3A /* LaunchScreen.storyboard */; };
+		09C9FC7A1DE20D1600AE0E3A /* PuzzleBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C9FC791DE20D1600AE0E3A /* PuzzleBoard.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,8 @@
 		09C9FC6D1DE2089300AE0E3A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		09C9FC701DE2089300AE0E3A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		09C9FC721DE2089300AE0E3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		09C9FC781DE20D1600AE0E3A /* PuzzleBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PuzzleBoard.h; sourceTree = "<group>"; };
+		09C9FC791DE20D1600AE0E3A /* PuzzleBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PuzzleBoard.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +65,8 @@
 				09C9FC651DE2089300AE0E3A /* AppDelegate.m */,
 				09C9FC671DE2089300AE0E3A /* ViewController.h */,
 				09C9FC681DE2089300AE0E3A /* ViewController.m */,
+				09C9FC781DE20D1600AE0E3A /* PuzzleBoard.h */,
+				09C9FC791DE20D1600AE0E3A /* PuzzleBoard.m */,
 				09C9FC6A1DE2089300AE0E3A /* Main.storyboard */,
 				09C9FC6D1DE2089300AE0E3A /* Assets.xcassets */,
 				09C9FC6F1DE2089300AE0E3A /* LaunchScreen.storyboard */,
@@ -152,6 +157,7 @@
 			files = (
 				09C9FC691DE2089300AE0E3A /* ViewController.m in Sources */,
 				09C9FC661DE2089300AE0E3A /* AppDelegate.m in Sources */,
+				09C9FC7A1DE20D1600AE0E3A /* PuzzleBoard.m in Sources */,
 				09C9FC631DE2089300AE0E3A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
