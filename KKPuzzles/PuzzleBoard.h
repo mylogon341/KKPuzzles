@@ -17,6 +17,8 @@
 
 @optional
 -(NSIndexPath*)indexOfMissingPuzzleForBoard:(PuzzleBoard*)board;
+-(CGFloat)tileBorderWidthForBoard:(PuzzleBoard*)board;
+-(UIColor*)tileBorderColorForBoard:(PuzzleBoard*)board;
 
 @end
 
@@ -33,5 +35,6 @@
 @property(nonatomic, readonly, getter=isCompleted) BOOL completed;
 
 -(void)shuffle;
+-(void)reloadBoard;
 
 @end
