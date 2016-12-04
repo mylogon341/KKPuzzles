@@ -35,9 +35,7 @@ static const uint32_t tileSpriteCategory = 0x1 << 0;
        
     [_contentView removeFromSuperview];
     
-    if (!_dataSource) {
-        return;
-    }
+    if (!_dataSource) return;
     
     _contentView = [[SKView alloc] initWithFrame:self.frame];
     _contentView.showsFPS = NO;
@@ -55,22 +53,26 @@ static const uint32_t tileSpriteCategory = 0x1 << 0;
     NSUInteger rowsNum = [self.dataSource numberOfRowsOnBoard:self];
     NSUInteger colsNum = [self.dataSource numberOfColsOnBoard:self];
 
-    [[PuzzlesTiler sharedTiler] tileImage:[_dataSource imageForBoard:self] withGrid:(KKGrid){rowsNum, colsNum} size:_contentView.frame.size completion:^(NSArray<UIImage*> *tiles, NSError *error) {
+    [[PuzzlesTiler sharedTiler] tileImage:[_dataSource imageForBoard:self] withGrid:(KKGrid){rowsNum, colsNum} size:_contentView.frame.size completion:^(NSArray<SKSpriteNode*> *tiles, NSError *error) {
         
-        for (UIImage *tile in tiles) {
+        CGFloat verticalOffset = 0.0, horizontalOffset = 0.0;
+        
+        if (!error && tiles.count > 0) {
+            horizontalOffset = (self.frame.size.width - tiles[0].size.width * colsNum) / 2.0;
+            verticalOffset = (self.frame.size.height - tiles[0].size.height * rowsNum) / 2.0;
+        }
+        
+        for (SKSpriteNode *tile in tiles) {
+        
+            tile.position = (CGPoint){horizontalOffset + tile.size.width * (([tiles indexOfObject:tile] % colsNum)), verticalOffset + tile.size.height * ([[[tiles reverseObjectEnumerator] allObjects] indexOfObject:tile] / rowsNum)};
             
-            //create sprite
-            SKSpriteNode *lionSprite = [SKSpriteNode spriteNodeWithTexture:[SKTexture textureWithCGImage:tile.CGImage]];
-            lionSprite.anchorPoint = (CGPoint){0.0, 0.0};
-            lionSprite.position = (CGPoint){lionSprite.size.width * (([tiles indexOfObject:tile] % colsNum)), lionSprite.size.height * ([tiles indexOfObject:tile] / rowsNum)};
-
             //add physics body
-            lionSprite.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:lionSprite.frame.size];
-            lionSprite.physicsBody.allowsRotation = NO;
-            lionSprite.physicsBody.categoryBitMask = tileSpriteCategory;
-            lionSprite.physicsBody.contactTestBitMask = tileSpriteCategory;
-            [_scene addChild: lionSprite];
-
+            tile.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:tile.frame.size];
+            tile.physicsBody.allowsRotation = NO;
+            tile.physicsBody.categoryBitMask = tileSpriteCategory;
+            tile.physicsBody.contactTestBitMask = tileSpriteCategory;
+            
+           [_scene addChild: tile];
         }
         
     }];

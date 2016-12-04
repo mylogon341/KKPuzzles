@@ -8,6 +8,8 @@
 
 #import "PuzzlesTiler.h"
 #import <EKTilesMaker/EKTilesMaker.h>
+#import "UIImage+Crop.h"
+#import <SpriteKit/SpriteKit.h>
 
 @implementation PuzzlesTiler
 
@@ -20,8 +22,8 @@
     return sharedTiler;
 }
 
--(void)tileImage:(UIImage *)image withGrid:(KKGrid)grid size:(CGSize)size completion:(void (^)(NSArray<UIImage *> *, NSError*))completionBlock{
-    
+-(void)tileImage:(UIImage *)image withGrid:(KKGrid)grid size:(CGSize)size completion:(void (^)(NSArray<SKSpriteNode *> *, NSError*))completionBlock{
+
     //set tiles destination path
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *directoryPath = [paths objectAtIndex:0];
@@ -33,6 +35,16 @@
     
     NSString *imagePath = [tilesDestinationPath stringByAppendingPathComponent:@"orig.png"];
     NSError *error = nil;
+    
+    //calculate zoom that aspect fits grid size
+    float heightRatio = size.height/image.size.height;
+    float widthRatio = size.width/image.size.width;
+    float scaleRatio = image.size.height > image.size.width ? heightRatio : widthRatio;
+    
+    //calculate tile size
+    float tileWidth = grid.cols != 0 ? floor(image.size.width/grid.cols) : floor(image.size.width);
+    float tileHeight = grid.rows != 0 ? floor(image.size.height/grid.rows) : floor(image.size.height);
+    
     [UIImagePNGRepresentation(image) writeToFile:imagePath options:(NSDataWritingAtomic) error:&error];
 
     //check if file succesfully written
@@ -40,21 +52,11 @@
         completionBlock(nil, error);
         return;
     }
-    
-    //calculate zoom that aspect fits grid size
-    float heightRatio = size.height/image.size.height;
-    float widthRatio = size.width/image.size.width;
-    float zoom = image.size.height > image.size.width ? heightRatio : widthRatio;
-    
-    //calculate tile size
-    float tileWidth = grid.cols != 0 ? ceil(image.size.width/grid.cols*zoom) : ceil(image.size.width*zoom);
-    float tileHeight = grid.rows != 0 ? ceil(image.size.height/grid.rows*zoom) : ceil(image.size.height*zoom);
 
     EKTilesMaker *tilesMaker = [EKTilesMaker new];
     [tilesMaker setSourceImagePath:imagePath];
     [tilesMaker setOutputFolderPath:tilesDestinationPath];
     [tilesMaker setOutputFileName:prefix];
-    [tilesMaker setZoomLevels:@[@(zoom)]];
     [tilesMaker setTileSize:(CGSize){tileWidth,tileHeight}];
     [tilesMaker setOutputFileType:OutputFileTypePNG];
     [tilesMaker setCompletionBlock:^{
@@ -78,7 +80,13 @@
         
         NSMutableArray *ret = [NSMutableArray array];
         for (NSString *tileFile in tileFiles) {
-            [ret addObject:[UIImage imageWithContentsOfFile:[tilesDestinationPath stringByAppendingPathComponent:tileFile]]];
+                        
+            //create sprite
+            SKSpriteNode *tile = [SKSpriteNode spriteNodeWithTexture:[SKTexture textureWithCGImage:[UIImage imageWithContentsOfFile:[tilesDestinationPath stringByAppendingPathComponent:tileFile]].CGImage]];
+            [tile setSize:(CGSize){floor(scaleRatio * tileWidth), floor(scaleRatio * tileHeight)}];
+            tile.anchorPoint = (CGPoint){0.0, 0.0};
+
+            [ret addObject:tile];
         }
         
         completionBlock([NSArray arrayWithArray:ret], nil);
