@@ -12,10 +12,11 @@
 
 static const uint32_t tileSpriteCategory = 0x1 << 0;
 
-@interface PuzzleBoard ()
+@interface PuzzleBoard () <SKSceneDelegate, SKPhysicsContactDelegate>
 
 @property(nonatomic, strong) SKView *contentView;
 @property(nonatomic, strong) SKScene *scene;
+@property(nonatomic, strong) SKSpriteNode *selectedNode;
 
 @end
 
@@ -44,6 +45,8 @@ static const uint32_t tileSpriteCategory = 0x1 << 0;
 
     _scene = [[SKScene alloc] initWithSize:self.frame.size];
     _scene.physicsWorld.gravity = (CGVector){0, 0};
+    _scene.delegate = self;
+    _scene.physicsWorld.contactDelegate = self;
     _scene.scaleMode = SKSceneScaleModeResizeFill;
 
     [_contentView presentScene:_scene];
@@ -79,6 +82,39 @@ static const uint32_t tileSpriteCategory = 0x1 << 0;
 
     
     [self setNeedsLayout];
+}
+
+#pragma mark - SKPhysicsContact delegate
+
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    UITouch *touch = [touches anyObject];
+    CGPoint positionInScene = [touch locationInNode:self.scene];
+    
+    SKSpriteNode *touchedNode = (SKSpriteNode *)[self.scene nodeAtPoint:positionInScene];
+    ![_selectedNode isEqual:touchedNode] ? _selectedNode = touchedNode : nil;
+}
+
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+    UITouch *touch = [touches anyObject];
+    CGPoint positionInScene = [touch locationInNode:self.scene];
+    CGPoint previousPosition = [touch previousLocationInNode:self.scene];
+    CGPoint position = [_selectedNode position];
+
+    CGFloat dx = positionInScene.x - previousPosition.x;
+    CGFloat dy = positionInScene.y - previousPosition.y;
+    
+    if (fabs(dx) > fabs(dy)) {
+        [_selectedNode setPosition:CGPointMake(position.x + dx, position.y)];
+
+    }else{
+        [_selectedNode setPosition:CGPointMake(position.x, position.y + dy)];
+    }
+}
+
+-(void)didBeginContact:(SKPhysicsContact *)contact {
+    if (contact.bodyA.categoryBitMask != contact.bodyB.categoryBitMask) {
+        
+    }
 }
 
 @end
