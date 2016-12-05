@@ -20,7 +20,9 @@ static const uint32_t tileSpriteCategory = 0x1 << 0;
 
 @end
 
-@implementation PuzzleBoard
+@implementation PuzzleBoard {
+    CGRect playgroundBounds;
+}
 
 -(void)setDataSource:(id<PuzzleBoardDataSource>)dataSource {
     
@@ -59,6 +61,7 @@ static const uint32_t tileSpriteCategory = 0x1 << 0;
     [[PuzzlesTiler sharedTiler] tileImage:[_dataSource imageForBoard:self] withGrid:(KKGrid){rowsNum, colsNum} size:_contentView.frame.size completion:^(NSArray<SKSpriteNode*> *tiles, NSError *error) {
         
         CGFloat verticalOffset = 0.0, horizontalOffset = 0.0;
+        CGPoint topLeft, bottomRight;
         
         if (!error && tiles.count > 0) {
             horizontalOffset = (self.frame.size.width - tiles[0].size.width * colsNum) / 2.0;
@@ -66,18 +69,27 @@ static const uint32_t tileSpriteCategory = 0x1 << 0;
         }
         
         for (SKSpriteNode *tile in tiles) {
-        
+            
+            tile.name = @"tile";
             tile.position = (CGPoint){horizontalOffset + tile.size.width * (([tiles indexOfObject:tile] % colsNum)), verticalOffset + tile.size.height * ([[[tiles reverseObjectEnumerator] allObjects] indexOfObject:tile] / rowsNum)};
+            
+            if (tile == [tiles firstObject]) { //top left
+                topLeft = (CGPoint){CGRectGetMinX(tile.frame), CGRectGetMaxY(tile.frame)};
+            }else if(tile == [tiles lastObject]){ //bottom right
+                bottomRight = (CGPoint){CGRectGetMaxX(tile.frame), CGRectGetMinY(tile.frame)};
+            }
             
             //add physics body
             tile.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:tile.frame.size];
-            tile.physicsBody.allowsRotation = NO;
+            tile.physicsBody.allowsRotation = false;
             tile.physicsBody.categoryBitMask = tileSpriteCategory;
             tile.physicsBody.contactTestBitMask = tileSpriteCategory;
             
            [_scene addChild: tile];
         }
-        
+
+        playgroundBounds = CGRectMake(topLeft.x, bottomRight.y, bottomRight.x - topLeft.x, topLeft.y - bottomRight.y);
+
     }];
 
     
@@ -104,17 +116,40 @@ static const uint32_t tileSpriteCategory = 0x1 << 0;
     CGFloat dy = positionInScene.y - previousPosition.y;
     
     if (fabs(dx) > fabs(dy)) {
+        
+        //control playground bounds
+        if (CGRectGetMinX(_selectedNode.frame) + dx <= CGRectGetMinX(playgroundBounds) || CGRectGetMaxX(_selectedNode.frame) + dx >= CGRectGetMaxX(playgroundBounds)) return;
         [_selectedNode setPosition:CGPointMake(position.x + dx, position.y)];
 
     }else{
+        
+        //control playground bounds
+        if (CGRectGetMinY(_selectedNode.frame) + dy <= CGRectGetMinY(playgroundBounds) || CGRectGetMaxY(_selectedNode.frame) + dy >= CGRectGetMaxY(playgroundBounds)) return;
         [_selectedNode setPosition:CGPointMake(position.x, position.y + dy)];
     }
 }
 
--(void)didBeginContact:(SKPhysicsContact *)contact {
-    if (contact.bodyA.categoryBitMask != contact.bodyB.categoryBitMask) {
-        
+-(void)update:(NSTimeInterval)currentTime forScene:(SKScene *)scene {
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@", @"tile"];
+    NSArray *tiles = [scene.children filteredArrayUsingPredicate:predicate];
+    
+    for (SKNode *tile in tiles) {
+        //control playground bounds
+        if (CGRectGetMinX(tile.frame) <= CGRectGetMinX(playgroundBounds)) {
+            [tile setPosition:(CGPoint){CGRectGetMinX(playgroundBounds), tile.frame.origin.y}];
+        }
+        if (CGRectGetMaxX(tile.frame) >= CGRectGetMaxX(playgroundBounds)) {
+            [tile setPosition:(CGPoint){CGRectGetMaxX(playgroundBounds) - tile.frame.size.width, tile.frame.origin.y}];
+        }
+        if (CGRectGetMinY(tile.frame) <= CGRectGetMinY(playgroundBounds)) {
+            [tile setPosition:(CGPoint){tile.frame.origin.x, CGRectGetMinY(playgroundBounds)}];
+        }
+        if (CGRectGetMaxY(tile.frame) >= CGRectGetMaxY(playgroundBounds)) {
+            [tile setPosition:(CGPoint){tile.frame.origin.x, CGRectGetMaxY(playgroundBounds) - tile.frame.size.height}];
+        }
     }
 }
+
 
 @end
