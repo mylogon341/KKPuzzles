@@ -9,8 +9,7 @@
 #import "PuzzleBoard.h"
 #import "PuzzlesTiler.h"
 #import <SpriteKit/SpriteKit.h>
-
-static const uint32_t tileSpriteCategory = 0x1 << 0;
+#import "NSMutableArray+RandomUtils.h"
 
 @interface PuzzleBoard () <SKSceneDelegate, SKPhysicsContactDelegate>
 
@@ -22,6 +21,9 @@ static const uint32_t tileSpriteCategory = 0x1 << 0;
 
 @implementation PuzzleBoard {
     CGRect playgroundBounds;
+    NSSet *tileCenters;
+    NSDictionary<NSValue*, SKNode*> *completedState;
+    NSDictionary<NSValue*, SKNode*> *shuffledState;
 }
 
 -(void)setDataSource:(id<PuzzleBoardDataSource>)dataSource {
@@ -70,10 +72,17 @@ static const uint32_t tileSpriteCategory = 0x1 << 0;
             verticalOffset = (self.frame.size.height - tiles[0].size.height * rowsNum) / 2.0;
         }
         
+        NSMutableSet *centers = [NSMutableSet set];
+        NSMutableDictionary *completed = [NSMutableDictionary dictionary];
+        
         for (SKSpriteNode *tile in tiles) {
             
             tile.name = @"tile";
             tile.position = (CGPoint){horizontalOffset + tile.size.width * (([tiles indexOfObject:tile] % colsNum)), verticalOffset + tile.size.height * ([[[tiles reverseObjectEnumerator] allObjects] indexOfObject:tile] / rowsNum)};
+            
+            NSValue *center = [NSValue valueWithCGPoint:(CGPoint){CGRectGetMidX(tile.frame), CGRectGetMidY(tile.frame)}];
+            completed[center] = tile;
+            [centers addObject:center];
             
             if (tile == [tiles firstObject]) { //top left
                 topLeft = (CGPoint){CGRectGetMinX(tile.frame), CGRectGetMaxY(tile.frame)};
@@ -84,19 +93,32 @@ static const uint32_t tileSpriteCategory = 0x1 << 0;
             //add physics body
             tile.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:tile.frame.size];
             tile.physicsBody.allowsRotation = false;
-            tile.physicsBody.categoryBitMask = tileSpriteCategory;
-            tile.physicsBody.contactTestBitMask = tileSpriteCategory;
             
            [_scene addChild: tile];
         }
         
+        tileCenters = [NSSet setWithSet:centers];
+        completedState = [NSDictionary dictionaryWithDictionary:completed];
+        
         [tiles[missingTileIndex] removeFromParent];
         playgroundBounds = CGRectMake(topLeft.x, bottomRight.y, bottomRight.x - topLeft.x, topLeft.y - bottomRight.y);
+        
+        [self shuffle];
 
     }];
 
     
     [self setNeedsLayout];
+}
+
+-(void)shuffle{
+    NSMutableArray *centers = [NSMutableArray arrayWithArray:[completedState allKeys]];
+    NSMutableArray *tiles = [NSMutableArray arrayWithArray:[completedState allValues]];
+    
+    [centers shuffle];
+    [tiles shuffle];
+    
+    shuffledState = [NSDictionary dictionaryWithObjects:[NSArray arrayWithArray:tiles] forKeys:[NSArray arrayWithArray:centers]];
 }
 
 #pragma mark - SKPhysicsContact delegate
