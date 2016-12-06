@@ -57,7 +57,9 @@ static const uint32_t tileSpriteCategory = 0x1 << 0;
     
     NSUInteger rowsNum = [self.dataSource numberOfRowsOnBoard:self];
     NSUInteger colsNum = [self.dataSource numberOfColsOnBoard:self];
-
+    NSUInteger missingTileIndex = [self.dataSource respondsToSelector:@selector(indexOfMissingPuzzleForBoard:)] ? [self.dataSource indexOfMissingPuzzleForBoard:self] : rowsNum * (colsNum - 1);
+    missingTileIndex = missingTileIndex <= rowsNum * colsNum - 1 ? missingTileIndex : rowsNum * (colsNum - 1);
+    
     [[PuzzlesTiler sharedTiler] tileImage:[_dataSource imageForBoard:self] withGrid:(KKGrid){rowsNum, colsNum} size:_contentView.frame.size completion:^(NSArray<SKSpriteNode*> *tiles, NSError *error) {
         
         CGFloat verticalOffset = 0.0, horizontalOffset = 0.0;
@@ -87,7 +89,8 @@ static const uint32_t tileSpriteCategory = 0x1 << 0;
             
            [_scene addChild: tile];
         }
-
+        
+        [tiles[missingTileIndex] removeFromParent];
         playgroundBounds = CGRectMake(topLeft.x, bottomRight.y, bottomRight.x - topLeft.x, topLeft.y - bottomRight.y);
 
     }];

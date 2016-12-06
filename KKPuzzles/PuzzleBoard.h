@@ -16,7 +16,7 @@
 -(UIImage*)imageForBoard:(PuzzleBoard*)board;
 
 @optional
--(NSIndexPath*)indexOfMissingPuzzleForBoard:(PuzzleBoard*)board;
+-(NSUInteger)indexOfMissingPuzzleForBoard:(PuzzleBoard*)board;
 -(CGFloat)tileBorderWidthForBoard:(PuzzleBoard*)board;
 -(UIColor*)tileBorderColorForBoard:(PuzzleBoard*)board;
 
