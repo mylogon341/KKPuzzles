@@ -81,7 +81,7 @@
         for (NSString *tileFile in tileFiles) {
                         
             //create tile image view
-            UIImageView *tile = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:[tilesDestinationPath stringByAppendingPathComponent:tileFile]]];
+            Tile *tile = [[Tile alloc] initWithImage:[UIImage imageWithContentsOfFile:[tilesDestinationPath stringByAppendingPathComponent:tileFile]]];
             tile.contentMode = UIViewContentModeScaleAspectFill;
             
             [tile setFrame:(CGRect){0.0, 0.0, floor(scaleRatio * tileWidth), floor(scaleRatio * tileHeight)}];

@@ -10,11 +10,8 @@
 #import <UIKit/UIKit.h>
 #import "TileHolder.h"
 
-@interface Tile : NSObject
+@interface Tile : UIImageView
 
-@property (nonatomic, strong) UIImageView *image;
 @property (nonatomic, strong) TileHolder* holder;
-
--(id)initWithImage:(UIImageView*)image holder:(TileHolder*)holder;
 
 @end

@@ -10,10 +10,9 @@
 
 @implementation Tile
 
--(id)initWithImage:(UIImageView*)image holder:(TileHolder*)holder {
-    if(self = [super init]){
-        _image = image;
-        _holder = holder;
+-(id)init{
+    if (self = [super init]) {
+        _holder = nil;
     }
     return self;
 }

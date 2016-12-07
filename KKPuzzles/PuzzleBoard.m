@@ -12,7 +12,17 @@
 #import "Tile.h"
 #import "TileHolder.h"
 
+typedef enum : NSUInteger {
+    Above,
+    Below,
+    OnLeft,
+    OnRight
+} NeighbourRelation;
+
 @interface PuzzleBoard ()
+
+@property(nonatomic) NSUInteger rowsNum;
+@property(nonatomic) NSUInteger colsNum;
 
 @end
 
@@ -21,6 +31,9 @@
     NSArray<Tile*> *tiles;
     NSArray<TileHolder*> *holders;
 }
+
+@synthesize rowsNum;
+@synthesize colsNum;
 
 -(void)setDataSource:(id<PuzzleBoardDataSource>)dataSource {
     
@@ -36,61 +49,60 @@
     
     if (!_dataSource) return;
     
-    NSUInteger rowsNum = [self.dataSource numberOfRowsOnBoard:self];
-    NSUInteger colsNum = [self.dataSource numberOfColsOnBoard:self];
+    rowsNum = [self.dataSource numberOfRowsOnBoard:self];
+    colsNum = [self.dataSource numberOfColsOnBoard:self];
     NSUInteger missingTileIndex = [self.dataSource respondsToSelector:@selector(indexOfMissingPuzzleForBoard:)] ? [self.dataSource indexOfMissingPuzzleForBoard:self] : rowsNum * (colsNum - 1);
     missingTileIndex = missingTileIndex <= rowsNum * colsNum - 1 ? missingTileIndex : rowsNum * (colsNum - 1);
     
-    [[PuzzlesTiler sharedTiler] tileImage:[_dataSource imageForBoard:self] withGrid:(KKGrid){rowsNum, colsNum} size:self.frame.size completion:^(NSArray<UIImageView*> *images, NSError *error) {
+    [[PuzzlesTiler sharedTiler] tileImage:[_dataSource imageForBoard:self] withGrid:(KKGrid){rowsNum, colsNum} size:self.frame.size completion:^(NSArray<Tile*> *t, NSError *error) {
         
         CGFloat verticalOffset = 0.0, horizontalOffset = 0.0;
         CGPoint topLeft, bottomRight;
         
-        if (!error && images.count > 0) {
-            horizontalOffset = (self.frame.size.width - images[0].frame.size.width * colsNum) / 2.0;
-            verticalOffset = (self.frame.size.height - images[0].frame.size.height * rowsNum) / 2.0;
+        if (!error && t.count > 0) {
+            horizontalOffset = (self.frame.size.width - t[0].frame.size.width * colsNum) / 2.0;
+            verticalOffset = (self.frame.size.height - t[0].frame.size.height * rowsNum) / 2.0;
         }
         
-        NSMutableArray<Tile*> *tTiles = [NSMutableArray array];
+        NSMutableArray<Tile*> *tTiles = [NSMutableArray arrayWithArray:t];
         NSMutableArray<TileHolder*> *tHolders = [NSMutableArray array];
         
-        for (UIImageView *tileImage in images) {
+        for (Tile *tile in tTiles) {
             
-            NSUInteger index = [images indexOfObject:tileImage];
+            NSUInteger index = [tTiles indexOfObject:tile];
             
-            tileImage.frame = (CGRect){horizontalOffset + tileImage.frame.size.width * ((index % colsNum)), verticalOffset + tileImage.frame.size.height * (index / rowsNum), tileImage.frame.size.width, tileImage.frame.size.height};
+            tile.frame = (CGRect){horizontalOffset + tile.frame.size.width * ((index % colsNum)), verticalOffset + tile.frame.size.height * (index / rowsNum), tile.frame.size.width, tile.frame.size.height};
             
             UIPanGestureRecognizer *pgr = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
-            [tileImage setUserInteractionEnabled:true];
-            [tileImage addGestureRecognizer:pgr];
+            [tile setUserInteractionEnabled:true];
+            [tile addGestureRecognizer:pgr];
             
             TileHolder *holder = [[TileHolder alloc] init];
             holder.index = index;
-            holder.position = tileImage.frame.origin;
-            holder.center = tileImage.center;
+            holder.position = tile.frame.origin;
+            holder.center = tile.center;
             [tHolders addObject:holder];
             
-            Tile *tile = [[Tile alloc] initWithImage:tileImage holder:holder];
-            [tTiles addObject:tile];
+            tile.holder= holder;
             
-            [self addSubview:tileImage];
+            [self addSubview:tile];
             
-            if (tileImage == [images firstObject]) { //top left
-                topLeft = (CGPoint){CGRectGetMinX(tileImage.frame), CGRectGetMaxY(tileImage.frame)};
-            }else if(tileImage == [images lastObject]){ //bottom right
-                bottomRight = (CGPoint){CGRectGetMaxX(tileImage.frame), CGRectGetMinY(tileImage.frame)};
+            if (tile == [tTiles firstObject]) { //top left
+                topLeft = (CGPoint){CGRectGetMinX(tile.frame), CGRectGetMinY(tile.frame)};
+            }else if(tile == [tTiles lastObject]){ //bottom right
+                bottomRight = (CGPoint){CGRectGetMaxX(tile.frame), CGRectGetMaxY(tile.frame)};
             }
         }
         
         //remove missing tile
-        [tTiles[missingTileIndex].image removeFromSuperview];
+        [tTiles[missingTileIndex] removeFromSuperview];
         tTiles[missingTileIndex].holder = nil;
         [tTiles removeObjectAtIndex:missingTileIndex];
         
         holders = [NSArray arrayWithArray:tHolders];
         tiles = [NSArray arrayWithArray:tTiles];
         
-        playgroundBounds = CGRectMake(topLeft.x, bottomRight.y, bottomRight.x - topLeft.x, topLeft.y - bottomRight.y);
+        playgroundBounds = CGRectMake(topLeft.x, topLeft.y, bottomRight.x - topLeft.x, bottomRight.y - topLeft.y);
         
     }];
 
@@ -111,50 +123,98 @@
     
     static UIPanGestureRecognizerDirection direction = UIPanGestureRecognizerDirectionUndefined;
     
-    if(sender.state == UIGestureRecognizerStateBegan){
-        CGPoint velocity = [sender velocityInView:sender.view];
-        
-        BOOL isVerticalGesture = fabs(velocity.y) > fabs(velocity.x);
-        
-        if (isVerticalGesture) {
-            if (velocity.y > 0) {
-                direction = UIPanGestureRecognizerDirectionDown;
-            } else {
-                direction = UIPanGestureRecognizerDirectionUp;
+    switch (sender.state) {
+        case UIGestureRecognizerStateBegan: {
+            
+            CGPoint velocity = [sender velocityInView:sender.view];
+            
+            BOOL isVerticalGesture = fabs(velocity.y) > fabs(velocity.x);
+            
+            if (isVerticalGesture) {
+                if (velocity.y > 0) {
+                    direction = UIPanGestureRecognizerDirectionDown;
+                } else {
+                    direction = UIPanGestureRecognizerDirectionUp;
+                }
             }
-        }
-        
-        else {
-            if (velocity.x > 0) {
-                direction = UIPanGestureRecognizerDirectionRight;
-            } else {
-                direction = UIPanGestureRecognizerDirectionLeft;
+            
+            else {
+                if (velocity.x > 0) {
+                    direction = UIPanGestureRecognizerDirectionRight;
+                } else {
+                    direction = UIPanGestureRecognizerDirectionLeft;
+                }
             }
-        }
-    }
 
+            break;
+        }
+            
+        case UIGestureRecognizerStateEnded:{
+            
+            TileHolder *empty = [self getEmptyHolder];
+            TileHolder *currentHolder = ((Tile*)sender.view).holder;
+
+            if ([self distanceFrom:empty.center to:sender.view.center] <= [self distanceFrom:currentHolder.center to:sender.view.center]) {
+                [UIView animateWithDuration:0.2 animations:^{
+                    sender.view.center = empty.center;
+                } completion:^(BOOL finished) {
+                    ((Tile*)sender.view).holder = empty;
+                }];
+            }else{
+                [UIView animateWithDuration:0.2 animations:^{
+                    sender.view.center = currentHolder.center;
+                }];
+            }
+            
+            break;
+        }
+            
+        default:
+            break;
+    }
+    
     CGPoint center = sender.view.center;
     CGPoint translation = [sender translationInView:sender.view];
     
     switch (direction) {
         case UIPanGestureRecognizerDirectionUp: {
-            center = CGPointMake(center.x,
-                                 center.y + translation.y);
+            
+            TileHolder *neighbour = [self getNeighbourFor:((Tile*)sender.view).holder relation:Above];
+            if (!neighbour) return;
+            if (neighbour.empty) {
+                center = CGPointMake(center.x,
+                                     center.y + translation.y);
+            }
             break;
         }
         case UIPanGestureRecognizerDirectionDown: {
-            center = CGPointMake(center.x,
-                                 center.y + translation.y);
+            
+            TileHolder *neighbour = [self getNeighbourFor:((Tile*)sender.view).holder relation:Below];
+            if (!neighbour) return;
+            if (neighbour.empty) {
+                center = CGPointMake(center.x,
+                                     center.y + translation.y);
+            }
             break;
         }
         case UIPanGestureRecognizerDirectionLeft: {
-            center = CGPointMake(center.x + translation.x,
-                                 center.y);
+            
+            TileHolder *neighbour = [self getNeighbourFor:((Tile*)sender.view).holder relation:OnLeft];
+            if (!neighbour) return;
+            if (neighbour.empty) {
+                center = CGPointMake(center.x + translation.x,
+                                     center.y);
+            }
             break;
         }
         case UIPanGestureRecognizerDirectionRight: {
-            center = CGPointMake(center.x + translation.x,
-                                 center.y);
+            
+            TileHolder *neighbour = [self getNeighbourFor:((Tile*)sender.view).holder relation:OnRight];
+            if (!neighbour) return;
+            if (neighbour.empty) {
+                center = CGPointMake(center.x + translation.x,
+                                     center.y);
+            }
             break;
         }
         default: {
@@ -164,6 +224,60 @@
     
     sender.view.center = center;
     [sender setTranslation:CGPointZero inView:sender.view];
+}
+
+-(TileHolder*)getNeighbourFor:(TileHolder*)holder relation:(NeighbourRelation)relation {
+    switch (relation) {
+        case Above: {
+            
+            NSInteger aboveIndex = holder.index - rowsNum;
+            if (aboveIndex >= 0) {
+                return holders[aboveIndex];
+            }
+            break;
+        }
+        case Below: {
+            
+            NSInteger aboveIndex = holder.index + rowsNum;
+            if (aboveIndex <= holders.count - 1) {
+                return holders[aboveIndex];
+            }
+            break;
+        }
+        case OnLeft: {
+            
+            NSInteger aboveIndex = holder.index - 1;
+            if (aboveIndex >= 0) {
+                return holders[aboveIndex];
+            }
+            break;
+        }
+        case OnRight: {
+            
+            NSInteger aboveIndex = holder.index + 1;
+            if (aboveIndex <= holders.count - 1) {
+                return holders[aboveIndex];
+            }
+            break;
+        }
+        default:
+            break;
+    }
+    
+    return nil;
+}
+
+-(TileHolder*)getEmptyHolder {
+    for (TileHolder *holder in holders)
+        if (holder.empty) return holder;
+    return nil;
+}
+
+-(float)distanceFrom:(CGPoint)point1 to:(CGPoint)point2
+{
+    CGFloat xDist = (point2.x - point1.x);
+    CGFloat yDist = (point2.y - point1.y);
+    return sqrt((xDist * xDist) + (yDist * yDist));
 }
 
 @end
