@@ -60,6 +60,10 @@
             
             tileImage.frame = (CGRect){horizontalOffset + tileImage.frame.size.width * ((index % colsNum)), verticalOffset + tileImage.frame.size.height * (index / rowsNum), tileImage.frame.size.width, tileImage.frame.size.height};
             
+            UIPanGestureRecognizer *pgr = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+            [tileImage setUserInteractionEnabled:true];
+            [tileImage addGestureRecognizer:pgr];
+            
             TileHolder *holder = [[TileHolder alloc] init];
             holder.index = index;
             holder.position = tileImage.frame.origin;
@@ -92,6 +96,74 @@
 
     
     [self setNeedsLayout];
+}
+
+-(void)handlePan:(UIPanGestureRecognizer*)sender;
+{
+    
+    typedef NS_ENUM(NSUInteger, UIPanGestureRecognizerDirection) {
+        UIPanGestureRecognizerDirectionUndefined,
+        UIPanGestureRecognizerDirectionUp,
+        UIPanGestureRecognizerDirectionDown,
+        UIPanGestureRecognizerDirectionLeft,
+        UIPanGestureRecognizerDirectionRight
+    };
+    
+    static UIPanGestureRecognizerDirection direction = UIPanGestureRecognizerDirectionUndefined;
+    
+    if(sender.state == UIGestureRecognizerStateBegan){
+        CGPoint velocity = [sender velocityInView:sender.view];
+        
+        BOOL isVerticalGesture = fabs(velocity.y) > fabs(velocity.x);
+        
+        if (isVerticalGesture) {
+            if (velocity.y > 0) {
+                direction = UIPanGestureRecognizerDirectionDown;
+            } else {
+                direction = UIPanGestureRecognizerDirectionUp;
+            }
+        }
+        
+        else {
+            if (velocity.x > 0) {
+                direction = UIPanGestureRecognizerDirectionRight;
+            } else {
+                direction = UIPanGestureRecognizerDirectionLeft;
+            }
+        }
+    }
+
+    CGPoint center = sender.view.center;
+    CGPoint translation = [sender translationInView:sender.view];
+    
+    switch (direction) {
+        case UIPanGestureRecognizerDirectionUp: {
+            center = CGPointMake(center.x,
+                                 center.y + translation.y);
+            break;
+        }
+        case UIPanGestureRecognizerDirectionDown: {
+            center = CGPointMake(center.x,
+                                 center.y + translation.y);
+            break;
+        }
+        case UIPanGestureRecognizerDirectionLeft: {
+            center = CGPointMake(center.x + translation.x,
+                                 center.y);
+            break;
+        }
+        case UIPanGestureRecognizerDirectionRight: {
+            center = CGPointMake(center.x + translation.x,
+                                 center.y);
+            break;
+        }
+        default: {
+            break;
+        }
+    }
+    
+    sender.view.center = center;
+    [sender setTranslation:CGPointZero inView:sender.view];
 }
 
 @end
