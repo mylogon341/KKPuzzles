@@ -9,7 +9,6 @@
 #import "PuzzlesTiler.h"
 #import <EKTilesMaker/EKTilesMaker.h>
 #import "UIImage+Crop.h"
-#import <SpriteKit/SpriteKit.h>
 
 @implementation PuzzlesTiler
 
@@ -22,7 +21,7 @@
     return sharedTiler;
 }
 
--(void)tileImage:(UIImage *)image withGrid:(KKGrid)grid size:(CGSize)size completion:(void (^)(NSArray<SKSpriteNode *> *, NSError*))completionBlock{
+-(void)tileImage:(UIImage *)image withGrid:(KKGrid)grid size:(CGSize)size completion:(void (^)(NSArray<UIImageView *> *, NSError*))completionBlock{
 
     //set tiles destination path
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -81,11 +80,11 @@
         NSMutableArray *ret = [NSMutableArray array];
         for (NSString *tileFile in tileFiles) {
                         
-            //create sprite
-            SKSpriteNode *tile = [SKSpriteNode spriteNodeWithTexture:[SKTexture textureWithCGImage:[UIImage imageWithContentsOfFile:[tilesDestinationPath stringByAppendingPathComponent:tileFile]].CGImage]];
-            [tile setSize:(CGSize){floor(scaleRatio * tileWidth), floor(scaleRatio * tileHeight)}];
-            tile.anchorPoint = (CGPoint){0.0, 0.0};
-
+            //create tile image view
+            UIImageView *tile = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:[tilesDestinationPath stringByAppendingPathComponent:tileFile]]];
+            tile.contentMode = UIViewContentModeScaleAspectFill;
+            
+            [tile setFrame:(CGRect){0.0, 0.0, floor(scaleRatio * tileWidth), floor(scaleRatio * tileHeight)}];
             [ret addObject:tile];
         }
         

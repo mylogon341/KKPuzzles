@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import <SpriteKit/SpriteKit.h>
 
 typedef struct KKGrid {
     uint8_t rows;
@@ -18,6 +17,6 @@ typedef struct KKGrid {
 @interface PuzzlesTiler : NSObject
 
 +(id)sharedTiler;
--(void)tileImage:(UIImage*)image withGrid:(KKGrid)grid size:(CGSize)size completion:(void (^)(NSArray<SKSpriteNode*>*, NSError*))completionBlock;
+-(void)tileImage:(UIImage*)image withGrid:(KKGrid)grid size:(CGSize)size completion:(void (^)(NSArray<UIImageView*>*, NSError*))completionBlock;
 
 @end
