@@ -30,6 +30,7 @@ typedef enum : NSUInteger {
     CGRect playgroundBounds;
     NSArray<Tile*> *tiles;
     NSArray<TileHolder*> *holders;
+    Tile *missingTile;
 }
 
 @synthesize rowsNum;
@@ -84,6 +85,7 @@ typedef enum : NSUInteger {
             [tHolders addObject:holder];
             
             tile.holder= holder;
+            tile.completedIndex = index;
             
             [self addSubview:tile];
             
@@ -95,6 +97,7 @@ typedef enum : NSUInteger {
         }
         
         //remove missing tile
+        missingTile = tTiles[missingTileIndex];
         [tTiles[missingTileIndex] removeFromSuperview];
         tTiles[missingTileIndex].holder = nil;
         [tTiles removeObjectAtIndex:missingTileIndex];
@@ -159,6 +162,7 @@ typedef enum : NSUInteger {
                     sender.view.center = empty.center;
                 } completion:^(BOOL finished) {
                     ((Tile*)sender.view).holder = empty;
+                    [self checkBoardCompleted] ? [self boardCompleted] : nil;
                 }];
             }else{
                 [UIView animateWithDuration:0.2 animations:^{
@@ -378,6 +382,19 @@ typedef enum : NSUInteger {
     CGFloat xDist = (point2.x - point1.x);
     CGFloat yDist = (point2.y - point1.y);
     return sqrt((xDist * xDist) + (yDist * yDist));
+}
+
+-(Boolean)checkBoardCompleted {
+    for (Tile *tile in tiles)
+        if (tile.completedIndex != tile.holder.index) return false;
+    return true;
+}
+
+-(void)boardCompleted {
+    //add missing tile
+    [self addSubview:missingTile];
+    [self setUserInteractionEnabled:false];
+    [self.delegate respondsToSelector:@selector(boardCompleted:)] ? [self.delegate boardCompleted:self] : nil;
 }
 
 @end

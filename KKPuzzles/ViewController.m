@@ -47,4 +47,8 @@
     return [UIImage imageNamed:@"sample.jpg"];
 }
 
+-(void)boardCompleted:(PuzzleBoard *)board {
+    NSLog(@"board %@ completed!!!!", board);
+}
+
 @end

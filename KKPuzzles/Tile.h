@@ -13,5 +13,6 @@
 @interface Tile : UIImageView
 
 @property (nonatomic, strong) TileHolder* holder;
+@property (nonatomic) Boolean completedIndex;
 
 @end
