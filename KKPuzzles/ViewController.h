@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PuzzleBoard.h"
 
 @interface ViewController : UIViewController
 
+@property(nonatomic, strong) IBOutlet PuzzleBoard *board;
 
 @end
 

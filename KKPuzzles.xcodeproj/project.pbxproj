@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		090E3DCD1DF2DB0900EFEE03 /* UIImage+Crop.m in Sources */ = {isa = PBXBuildFile; fileRef = 090E3DCC1DF2DB0900EFEE03 /* UIImage+Crop.m */; };
+		091478AC1DF7FD4E0058AF74 /* Tile.m in Sources */ = {isa = PBXBuildFile; fileRef = 091478AB1DF7FD4E0058AF74 /* Tile.m */; };
+		091478B21DF807700058AF74 /* TileHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 091478B11DF807700058AF74 /* TileHolder.m */; };
 		091923BC1DF6C5EB008BDA88 /* NSMutableArray+RandomUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 091923BB1DF6C5EB008BDA88 /* NSMutableArray+RandomUtils.m */; };
 		09C9FC631DE2089300AE0E3A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C9FC621DE2089300AE0E3A /* main.m */; };
 		09C9FC661DE2089300AE0E3A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C9FC651DE2089300AE0E3A /* AppDelegate.m */; };
@@ -23,6 +25,10 @@
 /* Begin PBXFileReference section */
 		090E3DCB1DF2DB0900EFEE03 /* UIImage+Crop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Crop.h"; sourceTree = "<group>"; };
 		090E3DCC1DF2DB0900EFEE03 /* UIImage+Crop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Crop.m"; sourceTree = "<group>"; };
+		091478AA1DF7FD4E0058AF74 /* Tile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tile.h; sourceTree = "<group>"; };
+		091478AB1DF7FD4E0058AF74 /* Tile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tile.m; sourceTree = "<group>"; };
+		091478B01DF807700058AF74 /* TileHolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TileHolder.h; sourceTree = "<group>"; };
+		091478B11DF807700058AF74 /* TileHolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TileHolder.m; sourceTree = "<group>"; };
 		091923BA1DF6C5EB008BDA88 /* NSMutableArray+RandomUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+RandomUtils.h"; sourceTree = "<group>"; };
 		091923BB1DF6C5EB008BDA88 /* NSMutableArray+RandomUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+RandomUtils.m"; sourceTree = "<group>"; };
 		09C9FC5E1DE2089300AE0E3A /* KKPuzzles.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KKPuzzles.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -103,6 +109,10 @@
 			children = (
 				09C9FC781DE20D1600AE0E3A /* PuzzleBoard.h */,
 				09C9FC791DE20D1600AE0E3A /* PuzzleBoard.m */,
+				091478AA1DF7FD4E0058AF74 /* Tile.h */,
+				091478AB1DF7FD4E0058AF74 /* Tile.m */,
+				091478B01DF807700058AF74 /* TileHolder.h */,
+				091478B11DF807700058AF74 /* TileHolder.m */,
 				09C9FC801DE2237E00AE0E3A /* PuzzlesTiler.h */,
 				09C9FC811DE2237E00AE0E3A /* PuzzlesTiler.m */,
 				091923BA1DF6C5EB008BDA88 /* NSMutableArray+RandomUtils.h */,
@@ -260,6 +270,8 @@
 				09C9FC7A1DE20D1600AE0E3A /* PuzzleBoard.m in Sources */,
 				09C9FC631DE2089300AE0E3A /* main.m in Sources */,
 				091923BC1DF6C5EB008BDA88 /* NSMutableArray+RandomUtils.m in Sources */,
+				091478B21DF807700058AF74 /* TileHolder.m in Sources */,
+				091478AC1DF7FD4E0058AF74 /* Tile.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
