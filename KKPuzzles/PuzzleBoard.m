@@ -184,6 +184,32 @@ typedef enum : NSUInteger {
             if (neighbour.empty) {
                 center = CGPointMake(center.x,
                                      center.y + translation.y);
+                
+                //control playground bounds
+                sender.view.center = center;
+                if (CGRectGetMaxY(sender.view.frame) >= CGRectGetMaxY(playgroundBounds)) {
+                    sender.view.center = (CGPoint){sender.view.center.x, CGRectGetMaxY(playgroundBounds) - sender.view.frame.size.height / 2};
+                }
+                if (CGRectGetMinY(sender.view.frame) <= CGRectGetMinY(playgroundBounds)) {
+                    sender.view.center = (CGPoint){sender.view.center.x, CGRectGetMinY(playgroundBounds) + sender.view.frame.size.height / 2};
+                }
+                
+                //control nearest tiles bounds
+                //above
+                TileHolder *nextNeighbour = [self getNeighbourFor:neighbour relation:Above];
+                if (nextNeighbour) {
+                    if (CGRectGetMinY(sender.view.frame) <= nextNeighbour.position.y + sender.view.frame.size.height) {
+                        sender.view.center = neighbour.center;
+                    }
+                }
+                //below
+                TileHolder *belowNeighbour = [self getNeighbourFor:((Tile*)sender.view).holder relation:Below];
+                if (belowNeighbour) {
+                    if (CGRectGetMaxY(sender.view.frame) >= belowNeighbour.position.y) {
+                        sender.view.center = ((Tile*)sender.view).holder.center;
+                    }
+                }
+                
             }
             break;
         }
@@ -194,6 +220,32 @@ typedef enum : NSUInteger {
             if (neighbour.empty) {
                 center = CGPointMake(center.x,
                                      center.y + translation.y);
+                
+                //control playground bounds
+                sender.view.center = center;
+                if (CGRectGetMaxY(sender.view.frame) >= CGRectGetMaxY(playgroundBounds)) {
+                    sender.view.center = (CGPoint){sender.view.center.x, CGRectGetMaxY(playgroundBounds) - sender.view.frame.size.height / 2};
+                }
+                if (CGRectGetMinY(sender.view.frame) <= CGRectGetMinY(playgroundBounds)) {
+                    sender.view.center = (CGPoint){sender.view.center.x, CGRectGetMinY(playgroundBounds) + sender.view.frame.size.height / 2};
+                }
+                
+                //control nearest tiles bounds
+                //below
+                TileHolder *nextNeighbour = [self getNeighbourFor:neighbour relation:Below];
+                if (nextNeighbour) {
+                    if (CGRectGetMaxY(sender.view.frame) >= nextNeighbour.position.y) {
+                        sender.view.center = neighbour.center;
+                    }
+                }
+                //above
+                TileHolder *aboveNeighbour = [self getNeighbourFor:((Tile*)sender.view).holder relation:Above];
+                if (aboveNeighbour) {
+                    if (CGRectGetMinY(sender.view.frame) <= aboveNeighbour.position.y + sender.view.frame.size.height) {
+                        sender.view.center = ((Tile*)sender.view).holder.center;
+                    }
+                }
+
             }
             break;
         }
@@ -204,6 +256,32 @@ typedef enum : NSUInteger {
             if (neighbour.empty) {
                 center = CGPointMake(center.x + translation.x,
                                      center.y);
+                
+                //control playground bounds
+                sender.view.center = center;
+                if (CGRectGetMaxX(sender.view.frame) >= CGRectGetMaxX(playgroundBounds)) {
+                    sender.view.center = (CGPoint){CGRectGetMaxX(playgroundBounds) - sender.view.frame.size.width / 2, sender.view.center.y};
+                }
+                if (CGRectGetMinX(sender.view.frame) <= CGRectGetMinX(playgroundBounds)) {
+                    sender.view.center = (CGPoint){CGRectGetMinX(playgroundBounds) + sender.view.frame.size.width / 2, sender.view.center.y};
+                }
+                
+                //control nearest tiles bounds
+                //left
+                TileHolder *nextNeighbour = [self getNeighbourFor:neighbour relation:OnLeft];
+                if (nextNeighbour) {
+                    if (CGRectGetMinX(sender.view.frame) <= nextNeighbour.position.x + sender.view.frame.size.width) {
+                        sender.view.center = neighbour.center;
+                    }
+                }
+                //right
+                TileHolder *rightNeighbour = [self getNeighbourFor:((Tile*)sender.view).holder relation:OnRight];
+                if (rightNeighbour) {
+                    if (CGRectGetMaxX(sender.view.frame) >= rightNeighbour.position.x) {
+                        sender.view.center = ((Tile*)sender.view).holder.center;
+                    }
+                }
+
             }
             break;
         }
@@ -214,6 +292,31 @@ typedef enum : NSUInteger {
             if (neighbour.empty) {
                 center = CGPointMake(center.x + translation.x,
                                      center.y);
+                
+                //control playground bounds
+                sender.view.center = center;
+                if (CGRectGetMaxX(sender.view.frame) >= CGRectGetMaxX(playgroundBounds)) {
+                    sender.view.center = (CGPoint){CGRectGetMaxX(playgroundBounds) - sender.view.frame.size.width / 2, sender.view.center.y};
+                }
+                if (CGRectGetMinX(sender.view.frame) <= CGRectGetMinX(playgroundBounds)) {
+                    sender.view.center = (CGPoint){CGRectGetMinX(playgroundBounds) + sender.view.frame.size.width / 2, sender.view.center.y};
+                }
+                
+                //control nearest tiles bounds
+                //right
+                TileHolder *nextNeighbour = [self getNeighbourFor:neighbour relation:OnRight];
+                if (nextNeighbour) {
+                    if (CGRectGetMaxX(sender.view.frame) >= nextNeighbour.position.x) {
+                        sender.view.center = neighbour.center;
+                    }
+                }
+                //left
+                TileHolder *leftNeighbour = [self getNeighbourFor:((Tile*)sender.view).holder relation:OnLeft];
+                if (leftNeighbour) {
+                    if (CGRectGetMinX(sender.view.frame) <= leftNeighbour.position.x + sender.view.frame.size.width) {
+                        sender.view.center = ((Tile*)sender.view).holder.center;
+                    }
+                }
             }
             break;
         }
@@ -222,7 +325,6 @@ typedef enum : NSUInteger {
         }
     }
     
-    sender.view.center = center;
     [sender setTranslation:CGPointZero inView:sender.view];
 }
 
@@ -246,17 +348,15 @@ typedef enum : NSUInteger {
         }
         case OnLeft: {
             
-            NSInteger aboveIndex = holder.index - 1;
-            if (aboveIndex >= 0) {
-                return holders[aboveIndex];
+            if ((signed int)((holder.index % colsNum) - 1) >= 0) {
+                return holders[holder.index - 1];
             }
             break;
         }
         case OnRight: {
             
-            NSInteger aboveIndex = holder.index + 1;
-            if (aboveIndex <= holders.count - 1) {
-                return holders[aboveIndex];
+            if ((signed int)((holder.index % colsNum) + 1) <= colsNum - 1) {
+                return holders[holder.index + 1];
             }
             break;
         }
