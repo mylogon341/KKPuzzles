@@ -52,8 +52,8 @@ typedef enum : NSUInteger {
     
     rowsNum = [self.dataSource numberOfRowsOnBoard:self];
     colsNum = [self.dataSource numberOfColsOnBoard:self];
-    NSUInteger missingTileIndex = [self.dataSource respondsToSelector:@selector(indexOfMissingPuzzleForBoard:)] ? [self.dataSource indexOfMissingPuzzleForBoard:self] : rowsNum * (colsNum - 1);
-    missingTileIndex = missingTileIndex <= rowsNum * colsNum - 1 ? missingTileIndex : rowsNum * (colsNum - 1);
+    NSUInteger missingTileIndex = [self.dataSource respondsToSelector:@selector(indexOfMissingPuzzleForBoard:)] ? [self.dataSource indexOfMissingPuzzleForBoard:self] : colsNum * (rowsNum - 1);
+    missingTileIndex = missingTileIndex <= rowsNum * colsNum - 1 ? missingTileIndex : colsNum * (rowsNum - 1);
     
     [[PuzzlesTiler sharedTiler] tileImage:[_dataSource imageForBoard:self] withGrid:(KKGrid){rowsNum, colsNum} size:self.frame.size completion:^(NSArray<Tile*> *t, NSError *error) {
         
@@ -72,7 +72,7 @@ typedef enum : NSUInteger {
             
             NSUInteger index = [tTiles indexOfObject:tile];
             
-            tile.frame = (CGRect){horizontalOffset + tile.frame.size.width * ((index % colsNum)), verticalOffset + tile.frame.size.height * (index / rowsNum), tile.frame.size.width, tile.frame.size.height};
+            tile.frame = (CGRect){horizontalOffset + tile.frame.size.width * ((index % colsNum)), verticalOffset + tile.frame.size.height * (index / colsNum), tile.frame.size.width, tile.frame.size.height};
             
             UIPanGestureRecognizer *pgr = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
             [tile setUserInteractionEnabled:true];
@@ -336,7 +336,7 @@ typedef enum : NSUInteger {
     switch (relation) {
         case Above: {
             
-            NSInteger aboveIndex = holder.index - rowsNum;
+            NSInteger aboveIndex = holder.index - colsNum;
             if (aboveIndex >= 0) {
                 return holders[aboveIndex];
             }
@@ -344,7 +344,7 @@ typedef enum : NSUInteger {
         }
         case Below: {
             
-            NSInteger aboveIndex = holder.index + rowsNum;
+            NSInteger aboveIndex = holder.index + colsNum;
             if (aboveIndex <= holders.count - 1) {
                 return holders[aboveIndex];
             }
