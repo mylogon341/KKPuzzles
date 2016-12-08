@@ -8,7 +8,6 @@
 
 #import "PuzzlesTiler.h"
 #import <EKTilesMaker/EKTilesMaker.h>
-#import "UIImage+Crop.h"
 
 @implementation PuzzlesTiler
 
@@ -21,7 +20,7 @@
     return sharedTiler;
 }
 
--(void)tileImage:(UIImage *)image withGrid:(KKGrid)grid size:(CGSize)size completion:(void (^)(NSArray<UIImageView *> *, NSError*))completionBlock{
+-(void)tileImage:(UIImage *)image withGrid:(KKGrid)grid size:(CGSize)size completion:(void (^)(NSArray<Tile *> *, NSError*))completionBlock{
 
     //set tiles destination path
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
