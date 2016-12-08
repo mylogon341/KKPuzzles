@@ -31,6 +31,7 @@ typedef enum : NSUInteger {
     NSArray<Tile*> *tiles;
     NSArray<TileHolder*> *holders;
     Tile *missingTile;
+    Tile *pannedTile;
 }
 
 @synthesize rowsNum;
@@ -129,7 +130,10 @@ typedef enum : NSUInteger {
     switch (sender.state) {
         case UIGestureRecognizerStateBegan: {
             
-            CGPoint velocity = [sender velocityInView:sender.view];
+            if (pannedTile) return;
+            pannedTile = (Tile*)sender.view;
+            
+            CGPoint velocity = [sender velocityInView:pannedTile];
             
             BOOL isVerticalGesture = fabs(velocity.y) > fabs(velocity.x);
             
@@ -155,21 +159,23 @@ typedef enum : NSUInteger {
         case UIGestureRecognizerStateEnded:{
             
             TileHolder *empty = [self getEmptyHolder];
-            TileHolder *currentHolder = ((Tile*)sender.view).holder;
+            TileHolder *currentHolder = pannedTile.holder;
 
-            if ([self distanceFrom:empty.center to:sender.view.center] <= [self distanceFrom:currentHolder.center to:sender.view.center]) {
+            if ([self distanceFrom:empty.center to:pannedTile.center] <= [self distanceFrom:currentHolder.center to:pannedTile.center]) {
                 [UIView animateWithDuration:0.2 animations:^{
-                    sender.view.center = empty.center;
+                    pannedTile.center = empty.center;
                 } completion:^(BOOL finished) {
-                    ((Tile*)sender.view).holder = empty;
+                    pannedTile.holder = empty;
+                    pannedTile = nil;
                     [self checkBoardCompleted] ? [self boardCompleted] : nil;
                 }];
             }else{
                 [UIView animateWithDuration:0.2 animations:^{
-                    sender.view.center = currentHolder.center;
+                    pannedTile.center = currentHolder.center;
+                } completion:^(BOOL finished) {
+                    pannedTile = nil;
                 }];
             }
-            
             break;
         }
             
@@ -177,40 +183,40 @@ typedef enum : NSUInteger {
             break;
     }
     
-    CGPoint center = sender.view.center;
-    CGPoint translation = [sender translationInView:sender.view];
+    CGPoint center = pannedTile.center;
+    CGPoint translation = [sender translationInView:pannedTile];
     
     switch (direction) {
         case UIPanGestureRecognizerDirectionUp: {
             
-            TileHolder *neighbour = [self getNeighbourFor:((Tile*)sender.view).holder relation:Above];
+            TileHolder *neighbour = [self getNeighbourFor:pannedTile.holder relation:Above];
             if (!neighbour) return;
             if (neighbour.empty) {
                 center = CGPointMake(center.x,
                                      center.y + translation.y);
                 
                 //control playground bounds
-                sender.view.center = center;
-                if (CGRectGetMaxY(sender.view.frame) >= CGRectGetMaxY(playgroundBounds)) {
-                    sender.view.center = (CGPoint){sender.view.center.x, CGRectGetMaxY(playgroundBounds) - sender.view.frame.size.height / 2};
+                pannedTile.center = center;
+                if (CGRectGetMaxY(pannedTile.frame) >= CGRectGetMaxY(playgroundBounds)) {
+                    pannedTile.center = (CGPoint){pannedTile.center.x, CGRectGetMaxY(playgroundBounds) - pannedTile.frame.size.height / 2};
                 }
-                if (CGRectGetMinY(sender.view.frame) <= CGRectGetMinY(playgroundBounds)) {
-                    sender.view.center = (CGPoint){sender.view.center.x, CGRectGetMinY(playgroundBounds) + sender.view.frame.size.height / 2};
+                if (CGRectGetMinY(pannedTile.frame) <= CGRectGetMinY(playgroundBounds)) {
+                    pannedTile.center = (CGPoint){pannedTile.center.x, CGRectGetMinY(playgroundBounds) + pannedTile.frame.size.height / 2};
                 }
                 
                 //control nearest tiles bounds
                 //above
                 TileHolder *nextNeighbour = [self getNeighbourFor:neighbour relation:Above];
                 if (nextNeighbour) {
-                    if (CGRectGetMinY(sender.view.frame) <= nextNeighbour.position.y + sender.view.frame.size.height) {
-                        sender.view.center = neighbour.center;
+                    if (CGRectGetMinY(pannedTile.frame) <= nextNeighbour.position.y + pannedTile.frame.size.height) {
+                        pannedTile.center = neighbour.center;
                     }
                 }
                 //below
-                TileHolder *belowNeighbour = [self getNeighbourFor:((Tile*)sender.view).holder relation:Below];
+                TileHolder *belowNeighbour = [self getNeighbourFor:pannedTile.holder relation:Below];
                 if (belowNeighbour) {
-                    if (CGRectGetMaxY(sender.view.frame) >= belowNeighbour.position.y) {
-                        sender.view.center = ((Tile*)sender.view).holder.center;
+                    if (CGRectGetMaxY(pannedTile.frame) >= belowNeighbour.position.y) {
+                        pannedTile.center = pannedTile.holder.center;
                     }
                 }
                 
@@ -219,34 +225,34 @@ typedef enum : NSUInteger {
         }
         case UIPanGestureRecognizerDirectionDown: {
             
-            TileHolder *neighbour = [self getNeighbourFor:((Tile*)sender.view).holder relation:Below];
+            TileHolder *neighbour = [self getNeighbourFor:pannedTile.holder relation:Below];
             if (!neighbour) return;
             if (neighbour.empty) {
                 center = CGPointMake(center.x,
                                      center.y + translation.y);
                 
                 //control playground bounds
-                sender.view.center = center;
-                if (CGRectGetMaxY(sender.view.frame) >= CGRectGetMaxY(playgroundBounds)) {
-                    sender.view.center = (CGPoint){sender.view.center.x, CGRectGetMaxY(playgroundBounds) - sender.view.frame.size.height / 2};
+                pannedTile.center = center;
+                if (CGRectGetMaxY(pannedTile.frame) >= CGRectGetMaxY(playgroundBounds)) {
+                    pannedTile.center = (CGPoint){pannedTile.center.x, CGRectGetMaxY(playgroundBounds) - pannedTile.frame.size.height / 2};
                 }
-                if (CGRectGetMinY(sender.view.frame) <= CGRectGetMinY(playgroundBounds)) {
-                    sender.view.center = (CGPoint){sender.view.center.x, CGRectGetMinY(playgroundBounds) + sender.view.frame.size.height / 2};
+                if (CGRectGetMinY(pannedTile.frame) <= CGRectGetMinY(playgroundBounds)) {
+                    pannedTile.center = (CGPoint){pannedTile.center.x, CGRectGetMinY(playgroundBounds) + pannedTile.frame.size.height / 2};
                 }
                 
                 //control nearest tiles bounds
                 //below
                 TileHolder *nextNeighbour = [self getNeighbourFor:neighbour relation:Below];
                 if (nextNeighbour) {
-                    if (CGRectGetMaxY(sender.view.frame) >= nextNeighbour.position.y) {
-                        sender.view.center = neighbour.center;
+                    if (CGRectGetMaxY(pannedTile.frame) >= nextNeighbour.position.y) {
+                        pannedTile.center = neighbour.center;
                     }
                 }
                 //above
-                TileHolder *aboveNeighbour = [self getNeighbourFor:((Tile*)sender.view).holder relation:Above];
+                TileHolder *aboveNeighbour = [self getNeighbourFor:pannedTile.holder relation:Above];
                 if (aboveNeighbour) {
-                    if (CGRectGetMinY(sender.view.frame) <= aboveNeighbour.position.y + sender.view.frame.size.height) {
-                        sender.view.center = ((Tile*)sender.view).holder.center;
+                    if (CGRectGetMinY(pannedTile.frame) <= aboveNeighbour.position.y + pannedTile.frame.size.height) {
+                        pannedTile.center = pannedTile.holder.center;
                     }
                 }
 
@@ -255,34 +261,34 @@ typedef enum : NSUInteger {
         }
         case UIPanGestureRecognizerDirectionLeft: {
             
-            TileHolder *neighbour = [self getNeighbourFor:((Tile*)sender.view).holder relation:OnLeft];
+            TileHolder *neighbour = [self getNeighbourFor:pannedTile.holder relation:OnLeft];
             if (!neighbour) return;
             if (neighbour.empty) {
                 center = CGPointMake(center.x + translation.x,
                                      center.y);
                 
                 //control playground bounds
-                sender.view.center = center;
-                if (CGRectGetMaxX(sender.view.frame) >= CGRectGetMaxX(playgroundBounds)) {
-                    sender.view.center = (CGPoint){CGRectGetMaxX(playgroundBounds) - sender.view.frame.size.width / 2, sender.view.center.y};
+                pannedTile.center = center;
+                if (CGRectGetMaxX(pannedTile.frame) >= CGRectGetMaxX(playgroundBounds)) {
+                    pannedTile.center = (CGPoint){CGRectGetMaxX(playgroundBounds) - pannedTile.frame.size.width / 2, pannedTile.center.y};
                 }
-                if (CGRectGetMinX(sender.view.frame) <= CGRectGetMinX(playgroundBounds)) {
-                    sender.view.center = (CGPoint){CGRectGetMinX(playgroundBounds) + sender.view.frame.size.width / 2, sender.view.center.y};
+                if (CGRectGetMinX(pannedTile.frame) <= CGRectGetMinX(playgroundBounds)) {
+                    pannedTile.center = (CGPoint){CGRectGetMinX(playgroundBounds) + pannedTile.frame.size.width / 2, pannedTile.center.y};
                 }
                 
                 //control nearest tiles bounds
                 //left
                 TileHolder *nextNeighbour = [self getNeighbourFor:neighbour relation:OnLeft];
                 if (nextNeighbour) {
-                    if (CGRectGetMinX(sender.view.frame) <= nextNeighbour.position.x + sender.view.frame.size.width) {
-                        sender.view.center = neighbour.center;
+                    if (CGRectGetMinX(pannedTile.frame) <= nextNeighbour.position.x + pannedTile.frame.size.width) {
+                        pannedTile.center = neighbour.center;
                     }
                 }
                 //right
-                TileHolder *rightNeighbour = [self getNeighbourFor:((Tile*)sender.view).holder relation:OnRight];
+                TileHolder *rightNeighbour = [self getNeighbourFor:pannedTile.holder relation:OnRight];
                 if (rightNeighbour) {
-                    if (CGRectGetMaxX(sender.view.frame) >= rightNeighbour.position.x) {
-                        sender.view.center = ((Tile*)sender.view).holder.center;
+                    if (CGRectGetMaxX(pannedTile.frame) >= rightNeighbour.position.x) {
+                        pannedTile.center = pannedTile.holder.center;
                     }
                 }
 
@@ -291,34 +297,34 @@ typedef enum : NSUInteger {
         }
         case UIPanGestureRecognizerDirectionRight: {
             
-            TileHolder *neighbour = [self getNeighbourFor:((Tile*)sender.view).holder relation:OnRight];
+            TileHolder *neighbour = [self getNeighbourFor:pannedTile.holder relation:OnRight];
             if (!neighbour) return;
             if (neighbour.empty) {
                 center = CGPointMake(center.x + translation.x,
                                      center.y);
                 
                 //control playground bounds
-                sender.view.center = center;
-                if (CGRectGetMaxX(sender.view.frame) >= CGRectGetMaxX(playgroundBounds)) {
-                    sender.view.center = (CGPoint){CGRectGetMaxX(playgroundBounds) - sender.view.frame.size.width / 2, sender.view.center.y};
+                pannedTile.center = center;
+                if (CGRectGetMaxX(pannedTile.frame) >= CGRectGetMaxX(playgroundBounds)) {
+                    pannedTile.center = (CGPoint){CGRectGetMaxX(playgroundBounds) - pannedTile.frame.size.width / 2, pannedTile.center.y};
                 }
-                if (CGRectGetMinX(sender.view.frame) <= CGRectGetMinX(playgroundBounds)) {
-                    sender.view.center = (CGPoint){CGRectGetMinX(playgroundBounds) + sender.view.frame.size.width / 2, sender.view.center.y};
+                if (CGRectGetMinX(pannedTile.frame) <= CGRectGetMinX(playgroundBounds)) {
+                    pannedTile.center = (CGPoint){CGRectGetMinX(playgroundBounds) + pannedTile.frame.size.width / 2, pannedTile.center.y};
                 }
                 
                 //control nearest tiles bounds
                 //right
                 TileHolder *nextNeighbour = [self getNeighbourFor:neighbour relation:OnRight];
                 if (nextNeighbour) {
-                    if (CGRectGetMaxX(sender.view.frame) >= nextNeighbour.position.x) {
-                        sender.view.center = neighbour.center;
+                    if (CGRectGetMaxX(pannedTile.frame) >= nextNeighbour.position.x) {
+                        pannedTile.center = neighbour.center;
                     }
                 }
                 //left
-                TileHolder *leftNeighbour = [self getNeighbourFor:((Tile*)sender.view).holder relation:OnLeft];
+                TileHolder *leftNeighbour = [self getNeighbourFor:pannedTile.holder relation:OnLeft];
                 if (leftNeighbour) {
-                    if (CGRectGetMinX(sender.view.frame) <= leftNeighbour.position.x + sender.view.frame.size.width) {
-                        sender.view.center = ((Tile*)sender.view).holder.center;
+                    if (CGRectGetMinX(pannedTile.frame) <= leftNeighbour.position.x + pannedTile.frame.size.width) {
+                        pannedTile.center = pannedTile.holder.center;
                     }
                 }
             }
@@ -329,7 +335,7 @@ typedef enum : NSUInteger {
         }
     }
     
-    [sender setTranslation:CGPointZero inView:sender.view];
+    [sender setTranslation:CGPointZero inView:pannedTile];
 }
 
 -(TileHolder*)getNeighbourFor:(TileHolder*)holder relation:(NeighbourRelation)relation {
