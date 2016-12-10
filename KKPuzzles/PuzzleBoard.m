@@ -30,6 +30,7 @@ typedef enum : NSUInteger {
     CGRect playgroundBounds;
     NSArray<Tile*> *tiles;
     NSArray<TileHolder*> *holders;
+    
     Tile *missingTile;
     Tile *pannedTile;
 }
@@ -47,7 +48,11 @@ typedef enum : NSUInteger {
     }
 }
 
--(void)reloadBoard {
+-(BOOL)isCompleted {
+    return [self checkBoardCompleted];
+}
+
+-(void)reload {
     
     if (!_dataSource) return;
     
@@ -58,14 +63,6 @@ typedef enum : NSUInteger {
     
     [[PuzzlesTiler sharedTiler] tileImage:[_dataSource imageForBoard:self] withGrid:(KKGrid){rowsNum, colsNum} size:self.frame.size completion:^(NSArray<Tile*> *t, NSError *error) {
         
-        CGFloat verticalOffset = 0.0, horizontalOffset = 0.0;
-        CGPoint topLeft, bottomRight;
-        
-        if (!error && t.count > 0) {
-            horizontalOffset = (self.frame.size.width - t[0].frame.size.width * colsNum) / 2.0;
-            verticalOffset = (self.frame.size.height - t[0].frame.size.height * rowsNum) / 2.0;
-        }
-        
         NSMutableArray<Tile*> *tTiles = [NSMutableArray arrayWithArray:t];
         NSMutableArray<TileHolder*> *tHolders = [NSMutableArray array];
         
@@ -73,45 +70,68 @@ typedef enum : NSUInteger {
             
             NSUInteger index = [tTiles indexOfObject:tile];
             
-            tile.frame = (CGRect){horizontalOffset + tile.frame.size.width * ((index % colsNum)), verticalOffset + tile.frame.size.height * (index / colsNum), tile.frame.size.width, tile.frame.size.height};
-            
-            UIPanGestureRecognizer *pgr = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
-            [tile setUserInteractionEnabled:true];
-            [tile addGestureRecognizer:pgr];
-            
             TileHolder *holder = [[TileHolder alloc] init];
             holder.index = index;
-            holder.position = tile.frame.origin;
-            holder.center = tile.center;
             [tHolders addObject:holder];
             
             tile.holder= holder;
             tile.completedIndex = index;
-            
-            [self addSubview:tile];
-            
-            if (tile == [tTiles firstObject]) { //top left
-                topLeft = (CGPoint){CGRectGetMinX(tile.frame), CGRectGetMinY(tile.frame)};
-            }else if(tile == [tTiles lastObject]){ //bottom right
-                bottomRight = (CGPoint){CGRectGetMaxX(tile.frame), CGRectGetMaxY(tile.frame)};
-            }
         }
         
         //remove missing tile
         missingTile = tTiles[missingTileIndex];
-        [tTiles[missingTileIndex] removeFromSuperview];
         tTiles[missingTileIndex].holder = nil;
         [tTiles removeObjectAtIndex:missingTileIndex];
         
         holders = [NSArray arrayWithArray:tHolders];
         tiles = [NSArray arrayWithArray:tTiles];
         
-        playgroundBounds = CGRectMake(topLeft.x, topLeft.y, bottomRight.x - topLeft.x, bottomRight.y - topLeft.y);
-        
+        [self redraw];
     }];
+}
 
+-(void)redraw {
     
+    for (UIView* view in self.subviews) {
+        [view removeFromSuperview];
+    }
+    
+    if (tiles.count == 0) return;
+   
+    CGPoint topLeft, bottomRight;
+    
+    CGFloat horizontalOffset = (self.frame.size.width - tiles[0].frame.size.width * colsNum) / 2.0;
+    CGFloat verticalOffset = (self.frame.size.height - tiles[0].frame.size.height * rowsNum) / 2.0;
+    CGFloat tileWidth = tiles[0].frame.size.width;
+    CGFloat tileHeight = tiles[0].frame.size.height;
+    
+    for (TileHolder *holder in holders) {
+        holder.position = (CGPoint){horizontalOffset + tileWidth * ((holder.index % colsNum)), verticalOffset + tileHeight * (holder.index / colsNum)};
+        holder.center = CGPointApplyAffineTransform(holder.position, CGAffineTransformMakeTranslation(tileWidth/2, tileHeight/2));
+        
+        if (holder == [holders firstObject]) { //top left
+            topLeft = holder.position;
+        }else if(holder == [holders lastObject]){ //bottom right
+            bottomRight = CGPointApplyAffineTransform(holder.position, CGAffineTransformMakeTranslation(tileWidth, tileHeight));
+        }
+
+    }
+    
+    for (Tile *tile in tiles) {
+        
+        tile.frame = (CGRect){tile.holder.position.x, tile.holder.position.y, tileWidth, tileHeight};
+        
+        UIPanGestureRecognizer *pgr = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+        [tile setUserInteractionEnabled:true];
+        [tile addGestureRecognizer:pgr];
+        
+        [self addSubview:tile];
+    }
+
+    playgroundBounds = CGRectMake(topLeft.x, topLeft.y, bottomRight.x - topLeft.x, bottomRight.y - topLeft.y);
+    [self setUserInteractionEnabled:true];
     [self setNeedsLayout];
+    
 }
 
 -(void)handlePan:(UIPanGestureRecognizer*)sender;
@@ -398,9 +418,40 @@ typedef enum : NSUInteger {
 
 -(void)boardCompleted {
     //add missing tile
+    missingTile.center = [self getEmptyHolder].center;
     [self addSubview:missingTile];
     [self setUserInteractionEnabled:false];
     [self.delegate respondsToSelector:@selector(boardCompleted:)] ? [self.delegate boardCompleted:self] : nil;
+}
+
+-(void)shuffle {
+    tiles = [self shuffleTiles];
+    [self redraw];
+}
+
+-(NSArray*)shuffleTiles {
+    
+    NSMutableArray<Tile*> *sTiles = [NSMutableArray arrayWithArray:tiles];
+    NSMutableArray<TileHolder*> *sHolders = [NSMutableArray arrayWithArray:holders];
+    NSMutableArray<TileHolder*> *tHolders = [NSMutableArray arrayWithArray:holders];
+
+    [sTiles shuffle];
+    [sHolders shuffle];
+    
+    for (Tile *tile in sTiles) {
+        TileHolder *holder = [sHolders objectAtIndex:[sTiles indexOfObject:tile]];
+        tile.holder = holder;
+        [tHolders removeObject:holder];
+    }
+    
+    for (TileHolder *holder in holders) {
+        holder.empty = NO;
+    }
+    
+    [tHolders firstObject].empty = YES;
+    
+    return [NSArray arrayWithArray:sTiles];
+
 }
 
 @end

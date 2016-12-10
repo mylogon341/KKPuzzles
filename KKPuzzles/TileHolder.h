@@ -14,6 +14,6 @@
 @property(nonatomic) NSUInteger index;
 @property(nonatomic) CGPoint position;
 @property(nonatomic) CGPoint center;
-@property(nonatomic) Boolean empty;
+@property(nonatomic) BOOL empty;
 
 @end

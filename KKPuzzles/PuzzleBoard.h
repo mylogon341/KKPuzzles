@@ -35,6 +35,7 @@
 @property(nonatomic, readonly, getter=isCompleted) BOOL completed;
 
 -(void)shuffle;
--(void)reloadBoard;
+-(void)reload;
+-(void)redraw;
 
 @end
