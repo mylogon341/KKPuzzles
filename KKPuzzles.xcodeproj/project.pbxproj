@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		090F072B1DFBF92200542269 /* UIImage+Crop.m in Sources */ = {isa = PBXBuildFile; fileRef = 090F072A1DFBF92200542269 /* UIImage+Crop.m */; };
 		091478AC1DF7FD4E0058AF74 /* Tile.m in Sources */ = {isa = PBXBuildFile; fileRef = 091478AB1DF7FD4E0058AF74 /* Tile.m */; };
 		091478B21DF807700058AF74 /* TileHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 091478B11DF807700058AF74 /* TileHolder.m */; };
 		091923BC1DF6C5EB008BDA88 /* NSMutableArray+RandomUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 091923BB1DF6C5EB008BDA88 /* NSMutableArray+RandomUtils.m */; };
@@ -22,6 +23,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		090F07291DFBF92200542269 /* UIImage+Crop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Crop.h"; sourceTree = "<group>"; };
+		090F072A1DFBF92200542269 /* UIImage+Crop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Crop.m"; sourceTree = "<group>"; };
 		091478AA1DF7FD4E0058AF74 /* Tile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tile.h; sourceTree = "<group>"; };
 		091478AB1DF7FD4E0058AF74 /* Tile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tile.m; sourceTree = "<group>"; };
 		091478B01DF807700058AF74 /* TileHolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TileHolder.h; sourceTree = "<group>"; };
@@ -114,6 +117,8 @@
 				09C9FC811DE2237E00AE0E3A /* PuzzlesTiler.m */,
 				091923BA1DF6C5EB008BDA88 /* NSMutableArray+RandomUtils.h */,
 				091923BB1DF6C5EB008BDA88 /* NSMutableArray+RandomUtils.m */,
+				090F07291DFBF92200542269 /* UIImage+Crop.h */,
+				090F072A1DFBF92200542269 /* UIImage+Crop.m */,
 			);
 			name = Puzzles;
 			sourceTree = "<group>";
@@ -258,6 +263,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				090F072B1DFBF92200542269 /* UIImage+Crop.m in Sources */,
 				09C9FC821DE2237E00AE0E3A /* PuzzlesTiler.m in Sources */,
 				09C9FC691DE2089300AE0E3A /* ViewController.m in Sources */,
 				09C9FC661DE2089300AE0E3A /* AppDelegate.m in Sources */,

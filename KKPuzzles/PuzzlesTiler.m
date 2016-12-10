@@ -8,6 +8,7 @@
 
 #import "PuzzlesTiler.h"
 #import <EKTilesMaker/EKTilesMaker.h>
+#import "UIImage+Crop.h"
 
 @implementation PuzzlesTiler
 
@@ -43,7 +44,9 @@
     float tileWidth = grid.cols != 0 ? floor(image.size.width/grid.cols) : floor(image.size.width);
     float tileHeight = grid.rows != 0 ? floor(image.size.height/grid.rows) : floor(image.size.height);
     
-    [UIImagePNGRepresentation(image) writeToFile:imagePath options:(NSDataWritingAtomic) error:&error];
+    //crop image
+    UIImage *croppedImage = [image crop:(CGRect){0.0, 0.0, tileWidth * grid.cols, tileHeight * grid.rows}];
+    [UIImagePNGRepresentation(croppedImage) writeToFile:imagePath options:(NSDataWritingAtomic) error:&error];
 
     //check if file succesfully written
     if (error){
