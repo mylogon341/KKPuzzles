@@ -7,32 +7,37 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		090F072B1DFBF92200542269 /* UIImage+Crop.m in Sources */ = {isa = PBXBuildFile; fileRef = 090F072A1DFBF92200542269 /* UIImage+Crop.m */; };
 		090F072F1DFBFF9400542269 /* sample.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 090F072E1DFBFF9400542269 /* sample.jpg */; };
-		091478AC1DF7FD4E0058AF74 /* Tile.m in Sources */ = {isa = PBXBuildFile; fileRef = 091478AB1DF7FD4E0058AF74 /* Tile.m */; };
-		091478B21DF807700058AF74 /* TileHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 091478B11DF807700058AF74 /* TileHolder.m */; };
-		091923BC1DF6C5EB008BDA88 /* NSMutableArray+RandomUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 091923BB1DF6C5EB008BDA88 /* NSMutableArray+RandomUtils.m */; };
+		090F073F1DFC733300542269 /* NSMutableArray+RandomUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 090F07341DFC733300542269 /* NSMutableArray+RandomUtils.m */; };
+		090F07401DFC733300542269 /* PuzzleBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 090F07361DFC733300542269 /* PuzzleBoard.m */; };
+		090F07411DFC733300542269 /* PuzzlesTiler.m in Sources */ = {isa = PBXBuildFile; fileRef = 090F07381DFC733300542269 /* PuzzlesTiler.m */; };
+		090F07421DFC733300542269 /* Tile.m in Sources */ = {isa = PBXBuildFile; fileRef = 090F073A1DFC733300542269 /* Tile.m */; };
+		090F07431DFC733300542269 /* TileHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 090F073C1DFC733300542269 /* TileHolder.m */; };
+		090F07441DFC733300542269 /* UIImage+Crop.m in Sources */ = {isa = PBXBuildFile; fileRef = 090F073E1DFC733300542269 /* UIImage+Crop.m */; };
 		09C9FC631DE2089300AE0E3A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C9FC621DE2089300AE0E3A /* main.m */; };
 		09C9FC661DE2089300AE0E3A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C9FC651DE2089300AE0E3A /* AppDelegate.m */; };
 		09C9FC691DE2089300AE0E3A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C9FC681DE2089300AE0E3A /* ViewController.m */; };
 		09C9FC6C1DE2089300AE0E3A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09C9FC6A1DE2089300AE0E3A /* Main.storyboard */; };
 		09C9FC6E1DE2089300AE0E3A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09C9FC6D1DE2089300AE0E3A /* Assets.xcassets */; };
 		09C9FC711DE2089300AE0E3A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09C9FC6F1DE2089300AE0E3A /* LaunchScreen.storyboard */; };
-		09C9FC7A1DE20D1600AE0E3A /* PuzzleBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C9FC791DE20D1600AE0E3A /* PuzzleBoard.m */; };
-		09C9FC821DE2237E00AE0E3A /* PuzzlesTiler.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C9FC811DE2237E00AE0E3A /* PuzzlesTiler.m */; };
+		5D6767F40B96D1DC309EE251 /* libPods-KKPuzzlesExample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1253290B71BAC21DB2CBF69 /* libPods-KKPuzzlesExample.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		090F07291DFBF92200542269 /* UIImage+Crop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Crop.h"; sourceTree = "<group>"; };
-		090F072A1DFBF92200542269 /* UIImage+Crop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Crop.m"; sourceTree = "<group>"; };
 		090F072E1DFBFF9400542269 /* sample.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sample.jpg; sourceTree = "<group>"; };
-		091478AA1DF7FD4E0058AF74 /* Tile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tile.h; sourceTree = "<group>"; };
-		091478AB1DF7FD4E0058AF74 /* Tile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tile.m; sourceTree = "<group>"; };
-		091478B01DF807700058AF74 /* TileHolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TileHolder.h; sourceTree = "<group>"; };
-		091478B11DF807700058AF74 /* TileHolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TileHolder.m; sourceTree = "<group>"; };
-		091923BA1DF6C5EB008BDA88 /* NSMutableArray+RandomUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+RandomUtils.h"; sourceTree = "<group>"; };
-		091923BB1DF6C5EB008BDA88 /* NSMutableArray+RandomUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+RandomUtils.m"; sourceTree = "<group>"; };
-		09C9FC5E1DE2089300AE0E3A /* KKPuzzles.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KKPuzzles.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		090F07331DFC733300542269 /* NSMutableArray+RandomUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+RandomUtils.h"; path = "../../KKPuzzles/NSMutableArray+RandomUtils.h"; sourceTree = "<group>"; };
+		090F07341DFC733300542269 /* NSMutableArray+RandomUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMutableArray+RandomUtils.m"; path = "../../KKPuzzles/NSMutableArray+RandomUtils.m"; sourceTree = "<group>"; };
+		090F07351DFC733300542269 /* PuzzleBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PuzzleBoard.h; path = ../../KKPuzzles/PuzzleBoard.h; sourceTree = "<group>"; };
+		090F07361DFC733300542269 /* PuzzleBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PuzzleBoard.m; path = ../../KKPuzzles/PuzzleBoard.m; sourceTree = "<group>"; };
+		090F07371DFC733300542269 /* PuzzlesTiler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PuzzlesTiler.h; path = ../../KKPuzzles/PuzzlesTiler.h; sourceTree = "<group>"; };
+		090F07381DFC733300542269 /* PuzzlesTiler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PuzzlesTiler.m; path = ../../KKPuzzles/PuzzlesTiler.m; sourceTree = "<group>"; };
+		090F07391DFC733300542269 /* Tile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Tile.h; path = ../../KKPuzzles/Tile.h; sourceTree = "<group>"; };
+		090F073A1DFC733300542269 /* Tile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Tile.m; path = ../../KKPuzzles/Tile.m; sourceTree = "<group>"; };
+		090F073B1DFC733300542269 /* TileHolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TileHolder.h; path = ../../KKPuzzles/TileHolder.h; sourceTree = "<group>"; };
+		090F073C1DFC733300542269 /* TileHolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TileHolder.m; path = ../../KKPuzzles/TileHolder.m; sourceTree = "<group>"; };
+		090F073D1DFC733300542269 /* UIImage+Crop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Crop.h"; path = "../../KKPuzzles/UIImage+Crop.h"; sourceTree = "<group>"; };
+		090F073E1DFC733300542269 /* UIImage+Crop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Crop.m"; path = "../../KKPuzzles/UIImage+Crop.m"; sourceTree = "<group>"; };
+		09C9FC5E1DE2089300AE0E3A /* KKPuzzlesExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KKPuzzlesExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		09C9FC621DE2089300AE0E3A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		09C9FC641DE2089300AE0E3A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		09C9FC651DE2089300AE0E3A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -42,12 +47,11 @@
 		09C9FC6D1DE2089300AE0E3A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		09C9FC701DE2089300AE0E3A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		09C9FC721DE2089300AE0E3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		09C9FC781DE20D1600AE0E3A /* PuzzleBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PuzzleBoard.h; sourceTree = "<group>"; };
-		09C9FC791DE20D1600AE0E3A /* PuzzleBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PuzzleBoard.m; sourceTree = "<group>"; };
-		09C9FC801DE2237E00AE0E3A /* PuzzlesTiler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PuzzlesTiler.h; sourceTree = "<group>"; };
-		09C9FC811DE2237E00AE0E3A /* PuzzlesTiler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PuzzlesTiler.m; sourceTree = "<group>"; };
+		3FCE21CC6C2CB448DC68CC0E /* Pods-KKPuzzlesExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KKPuzzlesExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-KKPuzzlesExample/Pods-KKPuzzlesExample.release.xcconfig"; sourceTree = "<group>"; };
 		4A10BF28BB159DB01179576F /* Pods-KKPuzzles.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KKPuzzles.release.xcconfig"; path = "Pods/Target Support Files/Pods-KKPuzzles/Pods-KKPuzzles.release.xcconfig"; sourceTree = "<group>"; };
 		5075A0A96E15620F877E7F9A /* Pods-KKPuzzles.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KKPuzzles.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KKPuzzles/Pods-KKPuzzles.debug.xcconfig"; sourceTree = "<group>"; };
+		D1132C381B90CFD9810C1C1F /* Pods-KKPuzzlesExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KKPuzzlesExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KKPuzzlesExample/Pods-KKPuzzlesExample.debug.xcconfig"; sourceTree = "<group>"; };
+		D1253290B71BAC21DB2CBF69 /* libPods-KKPuzzlesExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-KKPuzzlesExample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,57 +59,66 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D6767F40B96D1DC309EE251 /* libPods-KKPuzzlesExample.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		090F07301DFC0DB100542269 /* Utils */ = {
+		090F07451DFC733C00542269 /* KKPuzzles */ = {
 			isa = PBXGroup;
 			children = (
-				09C9FC801DE2237E00AE0E3A /* PuzzlesTiler.h */,
-				09C9FC811DE2237E00AE0E3A /* PuzzlesTiler.m */,
-				091923BA1DF6C5EB008BDA88 /* NSMutableArray+RandomUtils.h */,
-				091923BB1DF6C5EB008BDA88 /* NSMutableArray+RandomUtils.m */,
-				090F07291DFBF92200542269 /* UIImage+Crop.h */,
-				090F072A1DFBF92200542269 /* UIImage+Crop.m */,
+				090F07331DFC733300542269 /* NSMutableArray+RandomUtils.h */,
+				090F07341DFC733300542269 /* NSMutableArray+RandomUtils.m */,
+				090F07351DFC733300542269 /* PuzzleBoard.h */,
+				090F07361DFC733300542269 /* PuzzleBoard.m */,
+				090F07371DFC733300542269 /* PuzzlesTiler.h */,
+				090F07381DFC733300542269 /* PuzzlesTiler.m */,
+				090F07391DFC733300542269 /* Tile.h */,
+				090F073A1DFC733300542269 /* Tile.m */,
+				090F073B1DFC733300542269 /* TileHolder.h */,
+				090F073C1DFC733300542269 /* TileHolder.m */,
+				090F073D1DFC733300542269 /* UIImage+Crop.h */,
+				090F073E1DFC733300542269 /* UIImage+Crop.m */,
 			);
-			name = Utils;
+			name = KKPuzzles;
 			sourceTree = "<group>";
 		};
 		09C9FC551DE2089300AE0E3A = {
 			isa = PBXGroup;
 			children = (
-				09C9FC601DE2089300AE0E3A /* KKPuzzles */,
+				09C9FC601DE2089300AE0E3A /* KKPuzzlesExample */,
 				09C9FC5F1DE2089300AE0E3A /* Products */,
 				90E8D5D98C8CCA7F1E07DFBC /* Pods */,
+				5245495BF67B6E9A728C67CB /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
 		09C9FC5F1DE2089300AE0E3A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				09C9FC5E1DE2089300AE0E3A /* KKPuzzles.app */,
+				09C9FC5E1DE2089300AE0E3A /* KKPuzzlesExample.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		09C9FC601DE2089300AE0E3A /* KKPuzzles */ = {
+		09C9FC601DE2089300AE0E3A /* KKPuzzlesExample */ = {
 			isa = PBXGroup;
 			children = (
+				090F07451DFC733C00542269 /* KKPuzzles */,
 				09C9FC641DE2089300AE0E3A /* AppDelegate.h */,
 				09C9FC651DE2089300AE0E3A /* AppDelegate.m */,
 				09C9FC671DE2089300AE0E3A /* ViewController.h */,
 				09C9FC681DE2089300AE0E3A /* ViewController.m */,
 				09C9FC7D1DE21E0300AE0E3A /* Resources */,
-				09C9FC7C1DE21D2700AE0E3A /* Puzzles */,
 				09C9FC6A1DE2089300AE0E3A /* Main.storyboard */,
 				09C9FC6D1DE2089300AE0E3A /* Assets.xcassets */,
 				09C9FC6F1DE2089300AE0E3A /* LaunchScreen.storyboard */,
 				09C9FC721DE2089300AE0E3A /* Info.plist */,
 				09C9FC611DE2089300AE0E3A /* Supporting Files */,
 			);
+			name = KKPuzzlesExample;
 			path = KKPuzzles;
 			sourceTree = "<group>";
 		};
@@ -117,20 +130,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		09C9FC7C1DE21D2700AE0E3A /* Puzzles */ = {
-			isa = PBXGroup;
-			children = (
-				09C9FC781DE20D1600AE0E3A /* PuzzleBoard.h */,
-				09C9FC791DE20D1600AE0E3A /* PuzzleBoard.m */,
-				091478AA1DF7FD4E0058AF74 /* Tile.h */,
-				091478AB1DF7FD4E0058AF74 /* Tile.m */,
-				091478B01DF807700058AF74 /* TileHolder.h */,
-				091478B11DF807700058AF74 /* TileHolder.m */,
-				090F07301DFC0DB100542269 /* Utils */,
-			);
-			name = Puzzles;
-			sourceTree = "<group>";
-		};
 		09C9FC7D1DE21E0300AE0E3A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -139,11 +138,21 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		5245495BF67B6E9A728C67CB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D1253290B71BAC21DB2CBF69 /* libPods-KKPuzzlesExample.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		90E8D5D98C8CCA7F1E07DFBC /* Pods */ = {
 			isa = PBXGroup;
 			children = (
 				5075A0A96E15620F877E7F9A /* Pods-KKPuzzles.debug.xcconfig */,
 				4A10BF28BB159DB01179576F /* Pods-KKPuzzles.release.xcconfig */,
+				D1132C381B90CFD9810C1C1F /* Pods-KKPuzzlesExample.debug.xcconfig */,
+				3FCE21CC6C2CB448DC68CC0E /* Pods-KKPuzzlesExample.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -151,9 +160,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		09C9FC5D1DE2089300AE0E3A /* KKPuzzles */ = {
+		09C9FC5D1DE2089300AE0E3A /* KKPuzzlesExample */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 09C9FC751DE2089300AE0E3A /* Build configuration list for PBXNativeTarget "KKPuzzles" */;
+			buildConfigurationList = 09C9FC751DE2089300AE0E3A /* Build configuration list for PBXNativeTarget "KKPuzzlesExample" */;
 			buildPhases = (
 				33812E5054F4406D89020958 /* 📦 Check Pods Manifest.lock */,
 				09C9FC5A1DE2089300AE0E3A /* Sources */,
@@ -166,9 +175,9 @@
 			);
 			dependencies = (
 			);
-			name = KKPuzzles;
+			name = KKPuzzlesExample;
 			productName = KKPuzzles;
-			productReference = 09C9FC5E1DE2089300AE0E3A /* KKPuzzles.app */;
+			productReference = 09C9FC5E1DE2089300AE0E3A /* KKPuzzlesExample.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -186,7 +195,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 09C9FC591DE2089300AE0E3A /* Build configuration list for PBXProject "KKPuzzles" */;
+			buildConfigurationList = 09C9FC591DE2089300AE0E3A /* Build configuration list for PBXProject "KKPuzzlesExample" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -199,7 +208,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				09C9FC5D1DE2089300AE0E3A /* KKPuzzles */,
+				09C9FC5D1DE2089300AE0E3A /* KKPuzzlesExample */,
 			);
 		};
 /* End PBXProject section */
@@ -246,7 +255,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-KKPuzzles/Pods-KKPuzzles-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-KKPuzzlesExample/Pods-KKPuzzlesExample-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		7CE5ACB837DAC43FEEFA08A7 /* 📦 Embed Pods Frameworks */ = {
@@ -261,7 +270,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-KKPuzzles/Pods-KKPuzzles-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-KKPuzzlesExample/Pods-KKPuzzlesExample-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -271,15 +280,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				090F072B1DFBF92200542269 /* UIImage+Crop.m in Sources */,
-				09C9FC821DE2237E00AE0E3A /* PuzzlesTiler.m in Sources */,
+				090F07441DFC733300542269 /* UIImage+Crop.m in Sources */,
+				090F07411DFC733300542269 /* PuzzlesTiler.m in Sources */,
+				090F07401DFC733300542269 /* PuzzleBoard.m in Sources */,
 				09C9FC691DE2089300AE0E3A /* ViewController.m in Sources */,
+				090F07431DFC733300542269 /* TileHolder.m in Sources */,
 				09C9FC661DE2089300AE0E3A /* AppDelegate.m in Sources */,
-				09C9FC7A1DE20D1600AE0E3A /* PuzzleBoard.m in Sources */,
+				090F073F1DFC733300542269 /* NSMutableArray+RandomUtils.m in Sources */,
+				090F07421DFC733300542269 /* Tile.m in Sources */,
 				09C9FC631DE2089300AE0E3A /* main.m in Sources */,
-				091923BC1DF6C5EB008BDA88 /* NSMutableArray+RandomUtils.m in Sources */,
-				091478B21DF807700058AF74 /* TileHolder.m in Sources */,
-				091478AC1DF7FD4E0058AF74 /* Tile.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -389,32 +398,32 @@
 		};
 		09C9FC761DE2089300AE0E3A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5075A0A96E15620F877E7F9A /* Pods-KKPuzzles.debug.xcconfig */;
+			baseConfigurationReference = D1132C381B90CFD9810C1C1F /* Pods-KKPuzzlesExample.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = KKPuzzles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kkuc.KKPuzzles;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = KKPuzzlesExample;
 			};
 			name = Debug;
 		};
 		09C9FC771DE2089300AE0E3A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4A10BF28BB159DB01179576F /* Pods-KKPuzzles.release.xcconfig */;
+			baseConfigurationReference = 3FCE21CC6C2CB448DC68CC0E /* Pods-KKPuzzlesExample.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = KKPuzzles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kkuc.KKPuzzles;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = KKPuzzlesExample;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		09C9FC591DE2089300AE0E3A /* Build configuration list for PBXProject "KKPuzzles" */ = {
+		09C9FC591DE2089300AE0E3A /* Build configuration list for PBXProject "KKPuzzlesExample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				09C9FC731DE2089300AE0E3A /* Debug */,
@@ -423,7 +432,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		09C9FC751DE2089300AE0E3A /* Build configuration list for PBXNativeTarget "KKPuzzles" */ = {
+		09C9FC751DE2089300AE0E3A /* Build configuration list for PBXNativeTarget "KKPuzzlesExample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				09C9FC761DE2089300AE0E3A /* Debug */,
