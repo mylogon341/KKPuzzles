@@ -19,10 +19,17 @@
     // Do any additional setup after loading the view, typically from a nib.
 }
 
--(void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
-    [self.board reloadBoard];
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+      [[NSNotificationCenter defaultCenter] addObserver:self
+                                               selector:@selector(orientationChanged)
+                                                   name:UIDeviceOrientationDidChangeNotification
+                                                 object:nil];
+}
 
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self.board reload];
 }
 
 -(void)viewDidLayoutSubviews {
@@ -34,13 +41,22 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(IBAction)shuffleBoard:(id)sender {
+    [self.board shuffle];
+}
+
+-(void)orientationChanged {
+    [self.view layoutIfNeeded];
+    [self.board redraw];
+}
+
 #pragma mark - Puzzle board data source
 -(NSInteger)numberOfRowsOnBoard:(PuzzleBoard *)board {
     return 3;
 }
 
 -(NSInteger)numberOfColsOnBoard:(PuzzleBoard *)board {
-    return 3;
+    return 2;
 }
 
 -(UIImage *)imageForBoard:(PuzzleBoard *)board {
@@ -48,7 +64,10 @@
 }
 
 -(void)boardCompleted:(PuzzleBoard *)board {
-    NSLog(@"board %@ completed!!!!", board);
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Success!" message:@"Board completed" preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil]];
+    
+    [self presentViewController:alert animated:true completion:nil];
 }
 
 @end

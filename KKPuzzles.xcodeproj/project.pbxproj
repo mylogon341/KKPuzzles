@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		090F072B1DFBF92200542269 /* UIImage+Crop.m in Sources */ = {isa = PBXBuildFile; fileRef = 090F072A1DFBF92200542269 /* UIImage+Crop.m */; };
+		090F072F1DFBFF9400542269 /* sample.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 090F072E1DFBFF9400542269 /* sample.jpg */; };
 		091478AC1DF7FD4E0058AF74 /* Tile.m in Sources */ = {isa = PBXBuildFile; fileRef = 091478AB1DF7FD4E0058AF74 /* Tile.m */; };
 		091478B21DF807700058AF74 /* TileHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 091478B11DF807700058AF74 /* TileHolder.m */; };
 		091923BC1DF6C5EB008BDA88 /* NSMutableArray+RandomUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 091923BB1DF6C5EB008BDA88 /* NSMutableArray+RandomUtils.m */; };
@@ -18,13 +19,13 @@
 		09C9FC6E1DE2089300AE0E3A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09C9FC6D1DE2089300AE0E3A /* Assets.xcassets */; };
 		09C9FC711DE2089300AE0E3A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09C9FC6F1DE2089300AE0E3A /* LaunchScreen.storyboard */; };
 		09C9FC7A1DE20D1600AE0E3A /* PuzzleBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C9FC791DE20D1600AE0E3A /* PuzzleBoard.m */; };
-		09C9FC7F1DE21E8C00AE0E3A /* sample.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 09C9FC7E1DE21E8C00AE0E3A /* sample.jpg */; };
 		09C9FC821DE2237E00AE0E3A /* PuzzlesTiler.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C9FC811DE2237E00AE0E3A /* PuzzlesTiler.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		090F07291DFBF92200542269 /* UIImage+Crop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Crop.h"; sourceTree = "<group>"; };
 		090F072A1DFBF92200542269 /* UIImage+Crop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Crop.m"; sourceTree = "<group>"; };
+		090F072E1DFBFF9400542269 /* sample.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sample.jpg; sourceTree = "<group>"; };
 		091478AA1DF7FD4E0058AF74 /* Tile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tile.h; sourceTree = "<group>"; };
 		091478AB1DF7FD4E0058AF74 /* Tile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tile.m; sourceTree = "<group>"; };
 		091478B01DF807700058AF74 /* TileHolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TileHolder.h; sourceTree = "<group>"; };
@@ -43,7 +44,6 @@
 		09C9FC721DE2089300AE0E3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		09C9FC781DE20D1600AE0E3A /* PuzzleBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PuzzleBoard.h; sourceTree = "<group>"; };
 		09C9FC791DE20D1600AE0E3A /* PuzzleBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PuzzleBoard.m; sourceTree = "<group>"; };
-		09C9FC7E1DE21E8C00AE0E3A /* sample.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sample.jpg; sourceTree = "<group>"; };
 		09C9FC801DE2237E00AE0E3A /* PuzzlesTiler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PuzzlesTiler.h; sourceTree = "<group>"; };
 		09C9FC811DE2237E00AE0E3A /* PuzzlesTiler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PuzzlesTiler.m; sourceTree = "<group>"; };
 		4A10BF28BB159DB01179576F /* Pods-KKPuzzles.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KKPuzzles.release.xcconfig"; path = "Pods/Target Support Files/Pods-KKPuzzles/Pods-KKPuzzles.release.xcconfig"; sourceTree = "<group>"; };
@@ -134,7 +134,7 @@
 		09C9FC7D1DE21E0300AE0E3A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				09C9FC7E1DE21E8C00AE0E3A /* sample.jpg */,
+				090F072E1DFBFF9400542269 /* sample.jpg */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -210,9 +210,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				09C9FC711DE2089300AE0E3A /* LaunchScreen.storyboard in Resources */,
+				090F072F1DFBFF9400542269 /* sample.jpg in Resources */,
 				09C9FC6E1DE2089300AE0E3A /* Assets.xcassets in Resources */,
 				09C9FC6C1DE2089300AE0E3A /* Main.storyboard in Resources */,
-				09C9FC7F1DE21E8C00AE0E3A /* sample.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
