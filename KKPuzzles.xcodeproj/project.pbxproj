@@ -61,6 +61,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		090F07301DFC0DB100542269 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				09C9FC801DE2237E00AE0E3A /* PuzzlesTiler.h */,
+				09C9FC811DE2237E00AE0E3A /* PuzzlesTiler.m */,
+				091923BA1DF6C5EB008BDA88 /* NSMutableArray+RandomUtils.h */,
+				091923BB1DF6C5EB008BDA88 /* NSMutableArray+RandomUtils.m */,
+				090F07291DFBF92200542269 /* UIImage+Crop.h */,
+				090F072A1DFBF92200542269 /* UIImage+Crop.m */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
 		09C9FC551DE2089300AE0E3A = {
 			isa = PBXGroup;
 			children = (
@@ -113,12 +126,7 @@
 				091478AB1DF7FD4E0058AF74 /* Tile.m */,
 				091478B01DF807700058AF74 /* TileHolder.h */,
 				091478B11DF807700058AF74 /* TileHolder.m */,
-				09C9FC801DE2237E00AE0E3A /* PuzzlesTiler.h */,
-				09C9FC811DE2237E00AE0E3A /* PuzzlesTiler.m */,
-				091923BA1DF6C5EB008BDA88 /* NSMutableArray+RandomUtils.h */,
-				091923BB1DF6C5EB008BDA88 /* NSMutableArray+RandomUtils.m */,
-				090F07291DFBF92200542269 /* UIImage+Crop.h */,
-				090F072A1DFBF92200542269 /* UIImage+Crop.m */,
+				090F07301DFC0DB100542269 /* Utils */,
 			);
 			name = Puzzles;
 			sourceTree = "<group>";

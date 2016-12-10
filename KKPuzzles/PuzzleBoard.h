@@ -11,27 +11,25 @@
 @class PuzzleBoard;
 @protocol PuzzleBoardDataSource <NSObject>
 
--(NSInteger)numberOfRowsOnBoard:(PuzzleBoard*)board;
--(NSInteger)numberOfColsOnBoard:(PuzzleBoard*)board;
--(UIImage*)imageForBoard:(PuzzleBoard*)board;
+-(NSInteger)numberOfRowsOnBoard:(PuzzleBoard* _Nonnull)board;
+-(NSInteger)numberOfColsOnBoard:(PuzzleBoard* _Nonnull)board;
+-(UIImage* _Nonnull)imageForBoard:(PuzzleBoard* _Nonnull)board;
 
 @optional
--(NSUInteger)indexOfMissingPuzzleForBoard:(PuzzleBoard*)board;
--(CGFloat)tileBorderWidthForBoard:(PuzzleBoard*)board;
--(UIColor*)tileBorderColorForBoard:(PuzzleBoard*)board;
+-(NSUInteger)indexOfMissingPuzzleForBoard:(PuzzleBoard* _Nonnull)board;
 
 @end
 
 @protocol PuzzleBoardDelegate <NSObject>
 @optional
--(void)boardCompleted:(PuzzleBoard*)board;
+-(void)boardCompleted:(PuzzleBoard* _Nonnull)board;
 
 @end
 
 @interface PuzzleBoard : UIView
 
-@property(nonatomic, weak) IBOutlet __nullable id<PuzzleBoardDataSource> dataSource;
-@property(nonatomic, weak) IBOutlet __nullable id<PuzzleBoardDelegate> delegate;
+@property(nonatomic, assign) IBOutlet __nullable id<PuzzleBoardDataSource> dataSource;
+@property(nonatomic, assign) IBOutlet __nullable id<PuzzleBoardDelegate> delegate;
 @property(nonatomic, readonly, getter=isCompleted) BOOL completed;
 
 -(void)shuffle;

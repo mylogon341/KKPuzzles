@@ -38,16 +38,6 @@ typedef enum : NSUInteger {
 @synthesize rowsNum;
 @synthesize colsNum;
 
--(void)setDataSource:(id<PuzzleBoardDataSource>)dataSource {
-    
-    if (_dataSource != dataSource) {
-        _dataSource = dataSource;
-        if (_dataSource) {
-//            [self reloadBoard];
-        }
-    }
-}
-
 -(BOOL)isCompleted {
     return [self checkBoardCompleted];
 }
@@ -86,6 +76,7 @@ typedef enum : NSUInteger {
         holders = [NSArray arrayWithArray:tHolders];
         tiles = [NSArray arrayWithArray:tTiles];
         
+        [self shuffle];
         [self redraw];
     }];
 }
@@ -133,6 +124,22 @@ typedef enum : NSUInteger {
     [self setNeedsLayout];
     
 }
+
+-(void)boardCompleted {
+    //add missing tile
+    missingTile.center = [self getEmptyHolder].center;
+    [self addSubview:missingTile];
+    [self setUserInteractionEnabled:false];
+    [self.delegate respondsToSelector:@selector(boardCompleted:)] ? [self.delegate boardCompleted:self] : nil;
+}
+
+-(void)shuffle {
+    tiles = [self shuffleTiles];
+    [self redraw];
+}
+
+
+#pragma mark Utils
 
 -(void)handlePan:(UIPanGestureRecognizer*)sender;
 {
@@ -414,19 +421,6 @@ typedef enum : NSUInteger {
     for (Tile *tile in tiles)
         if (tile.completedIndex != tile.holder.index) return false;
     return true;
-}
-
--(void)boardCompleted {
-    //add missing tile
-    missingTile.center = [self getEmptyHolder].center;
-    [self addSubview:missingTile];
-    [self setUserInteractionEnabled:false];
-    [self.delegate respondsToSelector:@selector(boardCompleted:)] ? [self.delegate boardCompleted:self] : nil;
-}
-
--(void)shuffle {
-    tiles = [self shuffleTiles];
-    [self redraw];
 }
 
 -(NSArray*)shuffleTiles {
