@@ -1,0 +1,3 @@
+target 'KKPuzzlesExample' do
+	pod 'EKTilesMaker'
+end
