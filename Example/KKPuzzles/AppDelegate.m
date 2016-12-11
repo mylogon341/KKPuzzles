@@ -2,7 +2,7 @@
 //  AppDelegate.m
 //  KKPuzzles
 //
-//  Created by cris on 20/11/16.
+//  Created by kkuc on 20/11/16.
 //  Copyright © 2016 Krzysztof Kuc. All rights reserved.
 //
 

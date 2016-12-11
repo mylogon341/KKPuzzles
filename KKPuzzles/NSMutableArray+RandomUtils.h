@@ -2,7 +2,7 @@
 //  NSMutableArray+RandomUtils.h
 //  KKPuzzles
 //
-//  Created by cris on 06/12/16.
+//  Created by kkuc on 06/12/16.
 //  Copyright © 2016 Krzysztof Kuc. All rights reserved.
 //
 

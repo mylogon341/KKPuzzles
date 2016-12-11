@@ -1,12 +1,12 @@
 Pod::Spec.new do |s|
   s.name         = "KKPuzzles"
-  s.version      = "1.0.0"
-  s.summary      = "A short description of KKPuzzles."
-  s.license      = { :type => "MIT", :file => "LICENSE.md" }
+  s.version      = "0.9.0"
+  s.summary      = "A simple Jigsaw puzzle game."
+  s.license      = { :type => "MIT", :file => "LICENSE" }
   s.author       = "Krzysztof Kuc"
-  s.homepage     = "https://bitbucket.org/kkuc93/kkpuzzle"
+  s.homepage     = "https://github.com/kkuc/KKPuzzles"
   s.platform     = :ios
-  s.source       = { :git => "https://bitbucket.org/kkuc93/kkpuzzle.git", :tag => "#{s.version}" }
+  s.source       = { :git => "https://github.com/kkuc/KKPuzzles.git", :tag => "#{s.version}" }
   s.source_files = "KKPuzzles", "KKPuzzles/**/*.{h,m}"
   s.dependency     "EKTilesMaker"
 end
