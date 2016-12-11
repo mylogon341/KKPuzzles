@@ -2,7 +2,7 @@
 //  UIImage+Crop.h
 //  KKPuzzles
 //
-//  Created by cris on 10/12/16.
+//  Created by kkuc on 10/12/16.
 //  Copyright © 2016 Krzysztof Kuc. All rights reserved.
 //
 
