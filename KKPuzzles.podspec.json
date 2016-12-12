@@ -1,6 +1,6 @@
 {
   "name": "KKPuzzles",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "summary": "A simple Jigsaw puzzle game.",
   "license": {
     "type": "MIT",
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://github.com/kkuc/KKPuzzles.git",
-    "tag": "0.9.0"
+    "tag": "0.9.1"
   },
   "source_files": [
     "KKPuzzles",
