@@ -19,7 +19,7 @@ typedef enum : NSUInteger {
     OnRight
 } NeighbourRelation;
 
-@interface PuzzleBoard ()
+@interface PuzzleBoard () <UIGestureRecognizerDelegate>
 
 @property(nonatomic) NSUInteger rowsNum;
 @property(nonatomic) NSUInteger colsNum;
@@ -113,6 +113,8 @@ typedef enum : NSUInteger {
         tile.frame = (CGRect){tile.holder.position.x, tile.holder.position.y, tileWidth, tileHeight};
         
         UIPanGestureRecognizer *pgr = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+        [pgr setMaximumNumberOfTouches:1];
+        [pgr setDelegate:self];
         [tile setUserInteractionEnabled:true];
         [tile addGestureRecognizer:pgr];
         
@@ -187,12 +189,15 @@ typedef enum : NSUInteger {
             
             TileHolder *empty = [self getEmptyHolder];
             TileHolder *currentHolder = pannedTile.holder;
+            
+            [self setUserInteractionEnabled:false];
 
             if ([self distanceFrom:empty.center to:pannedTile.center] <= [self distanceFrom:currentHolder.center to:pannedTile.center]) {
                 [UIView animateWithDuration:0.2 animations:^{
                     pannedTile.center = empty.center;
                 } completion:^(BOOL finished) {
                     pannedTile.holder = empty;
+                    [self setUserInteractionEnabled:true];
                     pannedTile = nil;
                     [self checkBoardCompleted] ? [self boardCompleted] : nil;
                 }];
@@ -200,6 +205,7 @@ typedef enum : NSUInteger {
                 [UIView animateWithDuration:0.2 animations:^{
                     pannedTile.center = currentHolder.center;
                 } completion:^(BOOL finished) {
+                    [self setUserInteractionEnabled:true];
                     pannedTile = nil;
                 }];
             }
@@ -446,6 +452,12 @@ typedef enum : NSUInteger {
     
     return [NSArray arrayWithArray:sTiles];
 
+}
+
+#pragma mark UIGestureRecognizer delegate
+
+-(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    return !pannedTile;
 }
 
 @end
