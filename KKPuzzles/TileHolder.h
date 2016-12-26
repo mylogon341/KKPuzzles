@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@interface TileHolder : NSObject
+@interface TileHolder : NSObject <NSCopying>
 
 @property(nonatomic) NSUInteger index;
 @property(nonatomic) CGPoint position;

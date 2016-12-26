@@ -1,5 +1,5 @@
 //
-//  NSMutableArray+RandomUtils.h
+//  NSArray+RandomUtils.h
 //  KKPuzzles
 //
 //  Created by kkuc on 06/12/16.
@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSMutableArray (RandomUtils)
--(void)shuffle;
+@interface NSArray (RandomUtils)
+
+-(id)pickRandomObject;
+
 @end
