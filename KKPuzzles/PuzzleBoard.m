@@ -8,7 +8,7 @@
 
 #import "PuzzleBoard.h"
 #import "PuzzlesTiler.h"
-#import "NSMutableArray+RandomUtils.h"
+#import "NSArray+RandomUtils.h"
 #import "Tile.h"
 #import "TileHolder.h"
 
@@ -30,6 +30,7 @@ typedef enum : NSUInteger {
     CGRect playgroundBounds;
     NSArray<Tile*> *tiles;
     NSArray<TileHolder*> *holders;
+    NSMutableDictionary<TileHolder*, Tile*> *currentState;
     
     Tile *missingTile;
     Tile *pannedTile;
@@ -51,6 +52,8 @@ typedef enum : NSUInteger {
     NSUInteger missingTileIndex = [self.dataSource respondsToSelector:@selector(indexOfMissingPuzzleForBoard:)] ? [self.dataSource indexOfMissingPuzzleForBoard:self] : colsNum * (rowsNum - 1);
     missingTileIndex = missingTileIndex <= rowsNum * colsNum - 1 ? missingTileIndex : colsNum * (rowsNum - 1);
     
+    currentState = [NSMutableDictionary dictionary];
+    
     [[PuzzlesTiler sharedTiler] tileImage:[_dataSource imageForBoard:self] withGrid:(KKGrid){rowsNum, colsNum} size:self.frame.size completion:^(NSArray<Tile*> *t, NSError *error) {
         
         NSMutableArray<Tile*> *tTiles = [NSMutableArray arrayWithArray:t];
@@ -64,10 +67,12 @@ typedef enum : NSUInteger {
             holder.index = index;
             [tHolders addObject:holder];
             
-            tile.holder= holder;
+            tile.holder = holder;
             tile.completedIndex = index;
+            
+            currentState[holder] = tile;
         }
-        
+
         //remove missing tile
         missingTile = tTiles[missingTileIndex];
         tTiles[missingTileIndex].holder = nil;
@@ -136,7 +141,7 @@ typedef enum : NSUInteger {
 }
 
 -(void)shuffle {
-    tiles = [self shuffleTiles];
+    [self shuffleTiles];
     [self redraw];
 }
 
@@ -197,6 +202,8 @@ typedef enum : NSUInteger {
                     pannedTile.center = empty.center;
                 } completion:^(BOOL finished) {
                     pannedTile.holder = empty;
+                    currentState[currentHolder] = nil;
+                    currentState[empty] = pannedTile;
                     [self setUserInteractionEnabled:true];
                     pannedTile = nil;
                     [self checkBoardCompleted] ? [self boardCompleted] : nil;
@@ -429,29 +436,29 @@ typedef enum : NSUInteger {
     return true;
 }
 
--(NSArray*)shuffleTiles {
+-(void)randomMoveWithout:(NSNumber*)without iterations:(NSUInteger)iterations {
     
-    NSMutableArray<Tile*> *sTiles = [NSMutableArray arrayWithArray:tiles];
-    NSMutableArray<TileHolder*> *sHolders = [NSMutableArray arrayWithArray:holders];
-    NSMutableArray<TileHolder*> *tHolders = [NSMutableArray arrayWithArray:holders];
-
-    [sTiles shuffle];
-    [sHolders shuffle];
+    if (iterations <= 0) return;
     
-    for (Tile *tile in sTiles) {
-        TileHolder *holder = [sHolders objectAtIndex:[sTiles indexOfObject:tile]];
-        tile.holder = holder;
-        [tHolders removeObject:holder];
+    TileHolder *empty = [self getEmptyHolder];
+    NSMutableArray *relations = [NSMutableArray arrayWithArray:@[@(Above), @(Below), @(OnLeft), @(OnRight)]];
+    [relations removeObject:without];
+    
+    NeighbourRelation randomRelation = ((NSNumber*)[[NSArray arrayWithArray:relations] pickRandomObject]).integerValue;
+    TileHolder *neighbour = [self getNeighbourFor:empty relation:randomRelation];
+    
+    if (neighbour) {
+        Tile *tile = currentState[neighbour];
+        tile.holder = empty;
+        currentState[empty] = tile;
+        currentState[neighbour] = nil;
     }
     
-    for (TileHolder *holder in holders) {
-        holder.empty = NO;
-    }
-    
-    [tHolders firstObject].empty = YES;
-    
-    return [NSArray arrayWithArray:sTiles];
+    [self randomMoveWithout:@(randomRelation) iterations:--iterations];
+}
 
+-(void)shuffleTiles {
+    [self randomMoveWithout:nil iterations:100];
 }
 
 #pragma mark UIGestureRecognizer delegate

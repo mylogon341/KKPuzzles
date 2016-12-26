@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		090F072F1DFBFF9400542269 /* sample.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 090F072E1DFBFF9400542269 /* sample.jpg */; };
-		090F073F1DFC733300542269 /* NSMutableArray+RandomUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 090F07341DFC733300542269 /* NSMutableArray+RandomUtils.m */; };
+		090F073F1DFC733300542269 /* NSArray+RandomUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 090F07341DFC733300542269 /* NSArray+RandomUtils.m */; };
 		090F07401DFC733300542269 /* PuzzleBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 090F07361DFC733300542269 /* PuzzleBoard.m */; };
 		090F07411DFC733300542269 /* PuzzlesTiler.m in Sources */ = {isa = PBXBuildFile; fileRef = 090F07381DFC733300542269 /* PuzzlesTiler.m */; };
 		090F07421DFC733300542269 /* Tile.m in Sources */ = {isa = PBXBuildFile; fileRef = 090F073A1DFC733300542269 /* Tile.m */; };
@@ -25,8 +25,8 @@
 
 /* Begin PBXFileReference section */
 		090F072E1DFBFF9400542269 /* sample.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sample.jpg; sourceTree = "<group>"; };
-		090F07331DFC733300542269 /* NSMutableArray+RandomUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+RandomUtils.h"; path = "../../KKPuzzles/NSMutableArray+RandomUtils.h"; sourceTree = "<group>"; };
-		090F07341DFC733300542269 /* NSMutableArray+RandomUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMutableArray+RandomUtils.m"; path = "../../KKPuzzles/NSMutableArray+RandomUtils.m"; sourceTree = "<group>"; };
+		090F07331DFC733300542269 /* NSArray+RandomUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+RandomUtils.h"; path = "../../KKPuzzles/NSArray+RandomUtils.h"; sourceTree = "<group>"; };
+		090F07341DFC733300542269 /* NSArray+RandomUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSArray+RandomUtils.m"; path = "../../KKPuzzles/NSArray+RandomUtils.m"; sourceTree = "<group>"; };
 		090F07351DFC733300542269 /* PuzzleBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PuzzleBoard.h; path = ../../KKPuzzles/PuzzleBoard.h; sourceTree = "<group>"; };
 		090F07361DFC733300542269 /* PuzzleBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PuzzleBoard.m; path = ../../KKPuzzles/PuzzleBoard.m; sourceTree = "<group>"; };
 		090F07371DFC733300542269 /* PuzzlesTiler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PuzzlesTiler.h; path = ../../KKPuzzles/PuzzlesTiler.h; sourceTree = "<group>"; };
@@ -69,8 +69,8 @@
 		090F07451DFC733C00542269 /* KKPuzzles */ = {
 			isa = PBXGroup;
 			children = (
-				090F07331DFC733300542269 /* NSMutableArray+RandomUtils.h */,
-				090F07341DFC733300542269 /* NSMutableArray+RandomUtils.m */,
+				090F07331DFC733300542269 /* NSArray+RandomUtils.h */,
+				090F07341DFC733300542269 /* NSArray+RandomUtils.m */,
 				090F07351DFC733300542269 /* PuzzleBoard.h */,
 				090F07361DFC733300542269 /* PuzzleBoard.m */,
 				090F07371DFC733300542269 /* PuzzlesTiler.h */,
@@ -286,7 +286,7 @@
 				09C9FC691DE2089300AE0E3A /* ViewController.m in Sources */,
 				090F07431DFC733300542269 /* TileHolder.m in Sources */,
 				09C9FC661DE2089300AE0E3A /* AppDelegate.m in Sources */,
-				090F073F1DFC733300542269 /* NSMutableArray+RandomUtils.m in Sources */,
+				090F073F1DFC733300542269 /* NSArray+RandomUtils.m in Sources */,
 				090F07421DFC733300542269 /* Tile.m in Sources */,
 				09C9FC631DE2089300AE0E3A /* main.m in Sources */,
 			);
