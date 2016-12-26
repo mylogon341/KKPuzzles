@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "KKPuzzles"
-  s.version      = "0.9.1"
+  s.version      = "0.9.2"
   s.summary      = "A simple Jigsaw puzzle game."
   s.license      = { :type => "MIT", :file => "LICENSE" }
   s.author       = "Krzysztof Kuc"
