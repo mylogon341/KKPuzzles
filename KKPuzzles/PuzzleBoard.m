@@ -19,6 +19,7 @@ typedef enum : NSUInteger {
     OnRight
 } NeighbourRelation;
 
+
 @interface PuzzleBoard () <UIGestureRecognizerDelegate>
 
 @property(nonatomic) NSUInteger rowsNum;
@@ -72,7 +73,7 @@ typedef enum : NSUInteger {
             
             currentState[holder] = tile;
         }
-
+        
         //remove missing tile
         missingTile = tTiles[missingTileIndex];
         tTiles[missingTileIndex].holder = nil;
@@ -81,19 +82,19 @@ typedef enum : NSUInteger {
         holders = [NSArray arrayWithArray:tHolders];
         tiles = [NSArray arrayWithArray:tTiles];
         
-        [self shuffle];
-        [self redraw];
+        //  [self shuffle];
+        [self redraw:false];
     }];
 }
 
--(void)redraw {
+-(void)redraw:(BOOL)animate {
     
     for (UIView* view in self.subviews) {
         [view removeFromSuperview];
     }
     
     if (tiles.count == 0) return;
-   
+    
     CGPoint topLeft, bottomRight;
     
     CGFloat horizontalOffset = (self.frame.size.width - tiles[0].frame.size.width * colsNum) / 2.0;
@@ -103,6 +104,7 @@ typedef enum : NSUInteger {
     
     for (TileHolder *holder in holders) {
         holder.position = (CGPoint){horizontalOffset + tileWidth * ((holder.index % colsNum)), verticalOffset + tileHeight * (holder.index / colsNum)};
+        
         holder.center = CGPointApplyAffineTransform(holder.position, CGAffineTransformMakeTranslation(tileWidth/2, tileHeight/2));
         
         if (holder == [holders firstObject]) { //top left
@@ -110,12 +112,15 @@ typedef enum : NSUInteger {
         }else if(holder == [holders lastObject]){ //bottom right
             bottomRight = CGPointApplyAffineTransform(holder.position, CGAffineTransformMakeTranslation(tileWidth, tileHeight));
         }
-
+        
     }
     
     for (Tile *tile in tiles) {
         
-        tile.frame = (CGRect){tile.holder.position.x, tile.holder.position.y, tileWidth, tileHeight};
+        [UIView animateWithDuration:animate ? 0.6 : 0
+                         animations:^{
+                             tile.frame = (CGRect){tile.holder.position.x, tile.holder.position.y, tileWidth, tileHeight};
+                         }];
         
         UIPanGestureRecognizer *pgr = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
         [pgr setMaximumNumberOfTouches:1];
@@ -125,7 +130,7 @@ typedef enum : NSUInteger {
         
         [self addSubview:tile];
     }
-
+    
     playgroundBounds = CGRectMake(topLeft.x, topLeft.y, bottomRight.x - topLeft.x, bottomRight.y - topLeft.y);
     [self setUserInteractionEnabled:true];
     [self setNeedsLayout];
@@ -142,7 +147,7 @@ typedef enum : NSUInteger {
 
 -(void)shuffle {
     [self shuffleTiles];
-    [self redraw];
+    [self redraw:true];
 }
 
 
@@ -186,7 +191,7 @@ typedef enum : NSUInteger {
                     direction = UIPanGestureRecognizerDirectionLeft;
                 }
             }
-
+            
             break;
         }
             
@@ -196,7 +201,7 @@ typedef enum : NSUInteger {
             TileHolder *currentHolder = pannedTile.holder;
             
             [self setUserInteractionEnabled:false];
-
+            
             if ([self distanceFrom:empty.center to:pannedTile.center] <= [self distanceFrom:currentHolder.center to:pannedTile.center]) {
                 [UIView animateWithDuration:0.2 animations:^{
                     pannedTile.center = empty.center;
@@ -295,7 +300,7 @@ typedef enum : NSUInteger {
                         pannedTile.center = pannedTile.holder.center;
                     }
                 }
-
+                
             }
             break;
         }
@@ -331,7 +336,7 @@ typedef enum : NSUInteger {
                         pannedTile.center = pannedTile.holder.center;
                     }
                 }
-
+                
             }
             break;
         }
@@ -436,29 +441,26 @@ typedef enum : NSUInteger {
     return true;
 }
 
--(void)randomMoveWithout:(NSNumber*)without iterations:(NSUInteger)iterations {
-    
-    if (iterations <= 0) return;
-    
-    TileHolder *empty = [self getEmptyHolder];
-    NSMutableArray *relations = [NSMutableArray arrayWithArray:@[@(Above), @(Below), @(OnLeft), @(OnRight)]];
-    [relations removeObject:without];
-    
-    NeighbourRelation randomRelation = ((NSNumber*)[[NSArray arrayWithArray:relations] pickRandomObject]).integerValue;
-    TileHolder *neighbour = [self getNeighbourFor:empty relation:randomRelation];
-    
-    if (neighbour) {
-        Tile *tile = currentState[neighbour];
-        tile.holder = empty;
-        currentState[empty] = tile;
-        currentState[neighbour] = nil;
-    }
-    
-    [self randomMoveWithout:@(randomRelation) iterations:--iterations];
-}
-
 -(void)shuffleTiles {
-    [self randomMoveWithout:nil iterations:100];
+    for (int i = 0; i < (rowsNum*colsNum*10); i++) {
+        
+        TileHolder *empty = [self getEmptyHolder];
+        NSArray *relations = @[@(Above), @(Below), @(OnLeft), @(OnRight)];
+        
+        TileHolder *neighbour;
+        
+        while (!neighbour) {
+            NeighbourRelation randomRelation = ((NSNumber*)[[NSArray arrayWithArray:relations] pickRandomObject]).integerValue;
+            neighbour = [self getNeighbourFor:empty relation:randomRelation];
+            
+            if (neighbour) {
+                Tile *tile = currentState[neighbour];
+                tile.holder = empty;
+                currentState[empty] = tile;
+                currentState[neighbour] = nil;
+            }
+        }
+    }
 }
 
 #pragma mark UIGestureRecognizer delegate
