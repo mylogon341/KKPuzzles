@@ -29,7 +29,7 @@ typedef enum : NSUInteger {
 
 @implementation PuzzleBoard {
     CGRect playgroundBounds;
-    NSArray<Tile*> *tiles;
+    NSMutableArray<Tile*> *tiles;
     NSArray<TileHolder*> *holders;
     NSMutableDictionary<TileHolder*, Tile*> *currentState;
     
@@ -44,7 +44,10 @@ typedef enum : NSUInteger {
     return [self checkBoardCompleted];
 }
 
--(void)reload {
+typedef void (^RemoveMissingTile)(void);
+RemoveMissingTile removeTile;
+
+-(void)reload:(void(^)(void))complete {
     
     if (!_dataSource) return;
     
@@ -55,36 +58,44 @@ typedef enum : NSUInteger {
     
     currentState = [NSMutableDictionary dictionary];
     
-    [[PuzzlesTiler sharedTiler] tileImage:[_dataSource imageForBoard:self] withGrid:(KKGrid){rowsNum, colsNum} size:self.frame.size completion:^(NSArray<Tile*> *t, NSError *error) {
-        
-        NSMutableArray<Tile*> *tTiles = [NSMutableArray arrayWithArray:t];
-        NSMutableArray<TileHolder*> *tHolders = [NSMutableArray array];
-        
-        for (Tile *tile in tTiles) {
-            
-            NSUInteger index = [tTiles indexOfObject:tile];
-            
-            TileHolder *holder = [[TileHolder alloc] init];
-            holder.index = index;
-            [tHolders addObject:holder];
-            
-            tile.holder = holder;
-            tile.completedIndex = index;
-            
-            currentState[holder] = tile;
-        }
-        
-        //remove missing tile
-        missingTile = tTiles[missingTileIndex];
-        tTiles[missingTileIndex].holder = nil;
-        [tTiles removeObjectAtIndex:missingTileIndex];
-        
-        holders = [NSArray arrayWithArray:tHolders];
-        tiles = [NSArray arrayWithArray:tTiles];
-        
-        //  [self shuffle];
-        [self redraw:false];
-    }];
+    [[PuzzlesTiler sharedTiler] tileImage:[_dataSource imageForBoard:self]
+                                 withGrid:(KKGrid){rowsNum, colsNum}
+                                     size:self.frame.size
+                               completion:^(NSArray<Tile*> *t, NSError *error) {
+                                   
+                                   NSMutableArray<Tile*> *tTiles = [NSMutableArray arrayWithArray:t];
+                                   NSMutableArray<TileHolder*> *tHolders = [NSMutableArray array];
+                                   
+                                   for (Tile *tile in tTiles) {
+                                       
+                                       NSUInteger index = [tTiles indexOfObject:tile];
+                                       
+                                       TileHolder *holder = [[TileHolder alloc] init];
+                                       holder.index = index;
+                                       [tHolders addObject:holder];
+                                       
+                                       tile.holder = holder;
+                                       tile.completedIndex = index;
+                                       
+                                       currentState[holder] = tile;
+                                   }
+                                   
+                                   removeTile = ^{
+                                       
+                                       //remove missing tile
+                                       missingTile = tTiles[missingTileIndex];
+                                       tTiles[missingTileIndex].holder = nil;
+                                       [tTiles removeObjectAtIndex:missingTileIndex];
+                                       
+                                       [tiles removeObject:missingTile];
+                                   };
+                                   
+                                   holders = [NSArray arrayWithArray:tHolders];
+                                   tiles = [NSMutableArray arrayWithArray:tTiles];
+                                   
+                                   [self redraw:false];
+                                   complete();
+                               }];
 }
 
 -(void)redraw:(BOOL)animate {
@@ -97,13 +108,12 @@ typedef enum : NSUInteger {
     
     CGPoint topLeft, bottomRight;
     
-    CGFloat horizontalOffset = (self.frame.size.width - tiles[0].frame.size.width * colsNum) / 2.0;
-    CGFloat verticalOffset = (self.frame.size.height - tiles[0].frame.size.height * rowsNum) / 2.0;
-    CGFloat tileWidth = tiles[0].frame.size.width;
-    CGFloat tileHeight = tiles[0].frame.size.height;
+    
+    CGFloat tileWidth = self.frame.size.width/colsNum;
+    CGFloat tileHeight = self.frame.size.height/rowsNum;
     
     for (TileHolder *holder in holders) {
-        holder.position = (CGPoint){horizontalOffset + tileWidth * ((holder.index % colsNum)), verticalOffset + tileHeight * (holder.index / colsNum)};
+        holder.position = (CGPoint){tileWidth * ((holder.index % colsNum)), tileHeight * (holder.index / colsNum)};
         
         holder.center = CGPointApplyAffineTransform(holder.position, CGAffineTransformMakeTranslation(tileWidth/2, tileHeight/2));
         
@@ -146,6 +156,7 @@ typedef enum : NSUInteger {
 }
 
 -(void)shuffle {
+    removeTile();
     [self shuffleTiles];
     [self redraw:true];
 }
@@ -212,6 +223,10 @@ typedef enum : NSUInteger {
                     [self setUserInteractionEnabled:true];
                     pannedTile = nil;
                     [self checkBoardCompleted] ? [self boardCompleted] : nil;
+                    
+                    if ([_delegate respondsToSelector:@selector(puzzleMoveMade)]) {
+                        [_delegate puzzleMoveMade];
+                    }
                 }];
             }else{
                 [UIView animateWithDuration:0.2 animations:^{
@@ -452,14 +467,12 @@ typedef enum : NSUInteger {
         while (!neighbour) {
             NeighbourRelation randomRelation = ((NSNumber*)[[NSArray arrayWithArray:relations] pickRandomObject]).integerValue;
             neighbour = [self getNeighbourFor:empty relation:randomRelation];
-            
-            if (neighbour) {
-                Tile *tile = currentState[neighbour];
-                tile.holder = empty;
-                currentState[empty] = tile;
-                currentState[neighbour] = nil;
-            }
         }
+        
+        Tile *tile = currentState[neighbour];
+        tile.holder = empty;
+        currentState[empty] = tile;
+        currentState[neighbour] = nil;
     }
 }
 

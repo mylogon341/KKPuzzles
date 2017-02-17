@@ -14,7 +14,6 @@
 -(NSInteger)numberOfRowsOnBoard:(PuzzleBoard* _Nonnull)board;
 -(NSInteger)numberOfColsOnBoard:(PuzzleBoard* _Nonnull)board;
 -(UIImage* _Nonnull)imageForBoard:(PuzzleBoard* _Nonnull)board;
-
 @optional
 -(NSUInteger)indexOfMissingPuzzleForBoard:(PuzzleBoard* _Nonnull)board;
 
@@ -23,6 +22,7 @@
 @protocol PuzzleBoardDelegate <NSObject>
 @optional
 -(void)boardCompleted:(PuzzleBoard* _Nonnull)board;
+-(void)puzzleMoveMade;
 
 @end
 
@@ -33,7 +33,7 @@
 @property(nonatomic, readonly, getter=isCompleted) BOOL completed;
 
 -(void)shuffle;
--(void)reload;
--(void)redraw;
+-(void)reload:(void(^)(void))complete;
+-(void)redraw:(BOOL)animate;
 
 @end
