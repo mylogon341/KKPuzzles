@@ -18,7 +18,10 @@
 }
 
 -(void)setHolder:(TileHolder*)holder{
+    //old holder set to empty
     _holder.empty = true;
+    
+    //new holder assigned and marked as not empty
     _holder = holder;
     _holder.empty = false;
 }

@@ -59,7 +59,7 @@
     [tilesMaker setOutputFolderPath:tilesDestinationPath];
     [tilesMaker setOutputFileName:prefix];
     [tilesMaker setTileSize:(CGSize){tileWidth,tileHeight}];
-    [tilesMaker setOutputFileType:OutputFileTypePNG];
+    [tilesMaker setOutputFileType:OutputFileTypeJPG];
     [tilesMaker setCompletionBlock:^{
         
         //remove original image from disk

@@ -22,7 +22,7 @@
 @protocol PuzzleBoardDelegate <NSObject>
 @optional
 -(void)boardCompleted:(PuzzleBoard* _Nonnull)board;
--(void)puzzleMoveMade;
+-(void)puzzleMoveMade:(NSDictionary* _Nonnull)positions missingTileIndex:(int)missingTileIndex;
 
 @end
 
@@ -34,6 +34,7 @@
 
 -(void)shuffle;
 -(void)reload:(void(^)(void))complete;
+-(void)reloadWithPosition:(NSDictionary*)positions missingPieceIndex:(int)missingPiece complete:(void(^)(void))complete;
 -(void)redraw:(BOOL)animate;
 
 @end
