@@ -23,29 +23,23 @@
 
 -(void)tileImage:(UIImage *)image withGrid:(KKGrid)grid size:(CGSize)size completion:(void (^)(NSArray<Tile *> *))completionBlock{
    
-   //calculate zoom that aspect fits grid size
-   float heightRatio = size.height/image.size.height;
-   float widthRatio = size.width/image.size.width;
-   float scaleRatio = image.size.height > image.size.width ? heightRatio : widthRatio;
-   
-   //calculate tile size
-   float tileWidth = grid.cols != 0 ? floor(image.size.width/grid.cols) : floor(image.size.width);
-   float tileHeight = grid.rows != 0 ? floor(image.size.height/grid.rows) : floor(image.size.height);
    
    EKTilesMaker *tilesMaker = [EKTilesMaker new];
-   [tilesMaker setTileSize:(CGSize){tileWidth,tileHeight}];
    [tilesMaker setOutputFileType:OutputFileTypeJPG];
    [tilesMaker createTiles:image
-                     tiles:^(NSArray<UIImage*>* tiles){
+                      cols:grid.cols
+                      rows:grid.rows
+                      size:size
+                     tiles:^(NSArray<UIImage*>*tiles,CGRect tileRect){
                         
                         NSMutableArray *ret = [NSMutableArray array];
-                        for (UIImage *tile in tiles) {
+                        for (UIImage *t in tiles) {
                            
                            //create tile image view
-                           Tile *tile = [[Tile alloc] initWithImage:tile];
+                           Tile *tile = [[Tile alloc] initWithImage:t];
                            tile.contentMode = UIViewContentModeScaleAspectFill;
                            
-                           [tile setFrame:(CGRect){0.0, 0.0, floor(scaleRatio * tileWidth), floor(scaleRatio * tileHeight)}];
+                           [tile setFrame:tileRect];
                            [ret addObject:tile];
                         }
                         completionBlock(ret.copy);
