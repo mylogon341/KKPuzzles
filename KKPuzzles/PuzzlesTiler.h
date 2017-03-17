@@ -22,6 +22,6 @@ typedef struct KKGrid {
 -(void)tileImage:(UIImage*)image
         withGrid:(KKGrid)grid
             size:(CGSize)size
-      completion:(void (^)(NSArray<Tile*>*, NSError*))completionBlock;
+      completion:(void (^)(NSArray<Tile*>*))completionBlock;
 
 @end

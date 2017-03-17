@@ -26,6 +26,7 @@ typedef enum : NSUInteger {
 @property(nonatomic) NSUInteger colsNum;
 
 @end
+typedef void (^RemoveMissingTile)(void);
 
 @implementation PuzzleBoard {
    CGRect playgroundBounds;
@@ -35,6 +36,8 @@ typedef enum : NSUInteger {
    
    Tile *missingTile;
    Tile *pannedTile;
+   
+   RemoveMissingTile removeTile;
 }
 
 @synthesize rowsNum;
@@ -55,7 +58,7 @@ typedef enum : NSUInteger {
          
          for (TileHolder * tileHolder in currentState.allKeys) {
             
-            if (tileHolder.index == tileHolderPos) {
+            if (tileHolder.index == tileHolderPos && completedIndex != 0) {
                Tile * tile = tiles[completedIndex.intValue];
                [tile setHolder:tileHolder];
                currentState[tileHolder] = tile;
@@ -69,7 +72,14 @@ typedef enum : NSUInteger {
          th.empty = false;
       }
       
+      for (int i = tiles.count-1; i >= 0; i--) {
+         if (tiles[i].completedIndex == 0) {
+            [tiles removeObject:tiles[i]];
+         }
+      }
+      
       TileHolder * emptyHolder = holders[missingPiece];
+      Tile * emptyTile = currentState[emptyHolder];
       emptyHolder.empty = true;
       currentState[emptyHolder] = nil;
       
@@ -77,9 +87,6 @@ typedef enum : NSUInteger {
    }];
    
 }
-
-typedef void (^RemoveMissingTile)(void);
-RemoveMissingTile removeTile;
 
 -(void)reload:(void(^)(void))complete {
    
@@ -95,7 +102,7 @@ RemoveMissingTile removeTile;
    [[PuzzlesTiler sharedTiler] tileImage:[_dataSource imageForBoard:self]
                                 withGrid:(KKGrid){rowsNum, colsNum}
                                     size:self.frame.size
-                              completion:^(NSArray<Tile*> *t, NSError *error) {
+                              completion:^(NSArray<Tile*> *t) {
                                  
                                  NSMutableArray<Tile*> *tTiles = [NSMutableArray arrayWithArray:t];
                                  NSMutableArray<TileHolder*> *tHolders = [NSMutableArray array];
@@ -126,6 +133,9 @@ RemoveMissingTile removeTile;
                                  
                                  holders = [NSArray arrayWithArray:tHolders];
                                  tiles = [NSMutableArray arrayWithArray:tTiles];
+                                 
+                                 tTiles = nil;
+                                 tHolders = nil;
                                  
                                  [self redraw:false];
                                  
@@ -261,16 +271,7 @@ RemoveMissingTile removeTile;
                pannedTile = nil;
                [self checkBoardCompleted] ? [self boardCompleted] : nil;
                
-               
-               if ([_delegate respondsToSelector:@selector(puzzleMoveMade:missingTileIndex:)]) {
-                  NSMutableDictionary * pos = [NSMutableDictionary new];
-                  
-                  for (Tile * t in tiles) {
-                     [pos setObject:@(t.holder.index) forKey:@(t.completedIndex)];
-                  }
-                  
-                  [_delegate puzzleMoveMade:pos missingTileIndex:[self getEmptyHolder].index];
-               }
+               [self updateSave];
             }];
          }else{
             [UIView animateWithDuration:0.2 animations:^{
@@ -440,6 +441,20 @@ RemoveMissingTile removeTile;
    }
    
    [sender setTranslation:CGPointZero inView:pannedTile];
+}
+
+-(void)updateSave{
+   if ([_delegate respondsToSelector:@selector(puzzleMoveMade:missingTileIndex:)]) {
+      NSMutableDictionary * pos = [NSMutableDictionary new];
+      
+      for (Tile * t in tiles) {
+         if (!t.holder.empty) {
+            [pos setObject:@(t.holder.index) forKey:@(t.completedIndex)];
+         }
+      }
+      
+      [_delegate puzzleMoveMade:pos missingTileIndex:[self getEmptyHolder].index];
+   }
 }
 
 -(TileHolder*)getNeighbourFor:(TileHolder*)holder relation:(NeighbourRelation)relation {
