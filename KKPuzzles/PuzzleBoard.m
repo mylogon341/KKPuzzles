@@ -124,10 +124,8 @@ typedef void (^RemoveMissingTile)(void);
                                  removeTile = ^{
                                     
                                     //remove missing tile
-                                    missingTile = tTiles[missingTileIndex];
-                                    tTiles[missingTileIndex].holder = nil;
-                                    [tTiles removeObjectAtIndex:missingTileIndex];
-                                    
+                                    missingTile = tiles[missingTileIndex];
+                                    tiles[missingTileIndex].holder = nil;
                                     [tiles removeObject:missingTile];
                                  };
                                  
