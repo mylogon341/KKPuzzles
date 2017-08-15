@@ -17,8 +17,6 @@ typedef struct KKGrid {
 
 @interface PuzzlesTiler : NSObject
 
-+(id)sharedTiler;
-
 -(void)tileImage:(UIImage*)image
         withGrid:(KKGrid)grid
             size:(CGSize)size

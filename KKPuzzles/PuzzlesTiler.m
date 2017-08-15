@@ -12,14 +12,6 @@
 
 @implementation PuzzlesTiler
 
-+(id)sharedTiler {
-   static PuzzlesTiler *sharedTiler = nil;
-   static dispatch_once_t onceToken;
-   dispatch_once(&onceToken, ^{
-      sharedTiler = [[self alloc] init];
-   });
-   return sharedTiler;
-}
 
 -(void)tileImage:(UIImage *)image withGrid:(KKGrid)grid size:(CGSize)size completion:(void (^)(NSArray<Tile *> *))completionBlock{
    
@@ -42,7 +34,7 @@
                            [tile setFrame:tileRect];
                            [ret addObject:tile];
                         }
-                        completionBlock(ret.copy);
+                        completionBlock([NSArray arrayWithArray:ret]);
                      }];
 }
 

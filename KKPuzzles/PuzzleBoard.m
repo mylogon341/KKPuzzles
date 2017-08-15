@@ -26,7 +26,6 @@ typedef enum : NSUInteger {
 @property(nonatomic) NSUInteger colsNum;
 
 @end
-typedef void (^RemoveMissingTile)(void);
 
 @implementation PuzzleBoard {
    CGRect playgroundBounds;
@@ -34,10 +33,11 @@ typedef void (^RemoveMissingTile)(void);
    NSArray<TileHolder*> *holders;
    NSMutableDictionary<TileHolder*, Tile*> *currentState;
    
+   NSUInteger missingTileIndex;
+   
    Tile *missingTile;
    Tile *pannedTile;
    
-   RemoveMissingTile removeTile;
 }
 
 @synthesize rowsNum;
@@ -72,14 +72,14 @@ typedef void (^RemoveMissingTile)(void);
          th.empty = false;
       }
       
-      for (int i = tiles.count-1; i >= 0; i--) {
+      for (int i = (int)tiles.count-1; i >= 0; i--) {
          if (tiles[i].completedIndex == 0) {
             [tiles removeObject:tiles[i]];
          }
       }
       
       TileHolder * emptyHolder = holders[missingPiece];
-      Tile * emptyTile = currentState[emptyHolder];
+      //      Tile * emptyTile = currentState[emptyHolder];
       emptyHolder.empty = true;
       currentState[emptyHolder] = nil;
       
@@ -94,53 +94,45 @@ typedef void (^RemoveMissingTile)(void);
    
    rowsNum = [self.dataSource numberOfRowsOnBoard:self];
    colsNum = [self.dataSource numberOfColsOnBoard:self];
-   NSUInteger missingTileIndex = [self.dataSource respondsToSelector:@selector(indexOfMissingPuzzleForBoard:)] ? [self.dataSource indexOfMissingPuzzleForBoard:self] : colsNum * (rowsNum - 1);
+   missingTileIndex = [self.dataSource respondsToSelector:@selector(indexOfMissingPuzzleForBoard:)] ? [self.dataSource indexOfMissingPuzzleForBoard:self] : colsNum * (rowsNum - 1);
    missingTileIndex = missingTileIndex <= rowsNum * colsNum - 1 ? missingTileIndex : colsNum * (rowsNum - 1);
    
    currentState = [NSMutableDictionary dictionary];
    
-   [[PuzzlesTiler sharedTiler] tileImage:[_dataSource imageForBoard:self]
-                                withGrid:(KKGrid){rowsNum, colsNum}
-                                    size:self.frame.size
-                              completion:^(NSArray<Tile*> *t) {
-                                 
-                                 NSMutableArray<Tile*> *tTiles = [NSMutableArray arrayWithArray:t];
-                                 NSMutableArray<TileHolder*> *tHolders = [NSMutableArray array];
-                                 
-                                 for (Tile *tile in tTiles) {
-                                    
-                                    NSUInteger index = [tTiles indexOfObject:tile];
-                                    
-                                    TileHolder *holder = [[TileHolder alloc] init];
-                                    holder.index = index;
-                                    [tHolders addObject:holder];
-                                    
-                                    tile.holder = holder;
-                                    tile.completedIndex = index;
-                                    
-                                    currentState[holder] = tile;
-                                 }
-                                 
-                                 removeTile = ^{
-                                    
-                                    //remove missing tile
-                                    missingTile = tiles[missingTileIndex];
-                                    tiles[missingTileIndex].holder = nil;
-                                    [tiles removeObject:missingTile];
-                                 };
-                                 
-                                 holders = [NSArray arrayWithArray:tHolders];
-                                 tiles = [NSMutableArray arrayWithArray:tTiles];
-                                 
-                                 tTiles = nil;
-                                 tHolders = nil;
-                                 
-                                 [self redraw:false];
-                                 
-                                 if (complete) {
-                                    complete();
-                                 }
-                              }];
+   [[PuzzlesTiler new] tileImage:[_dataSource imageForBoard:self]
+                        withGrid:(KKGrid){rowsNum, colsNum}
+                            size:self.frame.size
+                      completion:^(NSArray<Tile*> *t) {
+                         
+                         NSMutableArray<Tile*> *tTiles = [NSMutableArray arrayWithArray:t];
+                         NSMutableArray<TileHolder*> *tHolders = [NSMutableArray array];
+                         
+                         for (Tile *tile in tTiles) {
+                            
+                            NSUInteger index = [tTiles indexOfObject:tile];
+                            
+                            TileHolder *holder = [[TileHolder alloc] init];
+                            holder.index = index;
+                            [tHolders addObject:holder];
+                            
+                            tile.holder = holder;
+                            tile.completedIndex = index;
+                            
+                            currentState[holder] = tile;
+                         }
+                         
+                         holders = [NSArray arrayWithArray:tHolders];
+                         tiles = [NSMutableArray arrayWithArray:tTiles];
+                         
+                         tTiles = nil;
+                         tHolders = nil;
+                         
+                         [self redraw:false];
+                         
+                         if (complete) {
+                            complete();
+                         }
+                      }];
 }
 
 -(void)redraw:(BOOL)animate {
@@ -201,7 +193,12 @@ typedef void (^RemoveMissingTile)(void);
 }
 
 -(void)shuffle {
-   removeTile();
+   
+   //remove missing tile
+   missingTile = tiles[missingTileIndex];
+   tiles[missingTileIndex].holder = nil;
+   [tiles removeObject:missingTile];
+   
    [self shuffleTiles];
    [self redraw:true];
 }
@@ -540,3 +537,4 @@ typedef void (^RemoveMissingTile)(void);
 }
 
 @end
+
